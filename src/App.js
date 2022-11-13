@@ -187,6 +187,7 @@ export default function App() {
                 cols="30"
                 rows="10"
                 id="notes"
+                value={notes}
                 placeholder="Additional notes to the client"
                 onChange={(e) => setNotes(e.target.value)}
               ></textarea>

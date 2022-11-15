@@ -6,6 +6,7 @@ import Header from "src/components/Header";
 import MainDetails from "src/components/MainDetails";
 import Notes from "src/components/Notes";
 import Table from "src/components/Table";
+import TableFrom from "src/components/TableFrom";
 
 export default function App() {
   const [showInvoice, setShowInvoice] = useState(false);
@@ -22,6 +23,10 @@ export default function App() {
   const [invoiceDate, setInvoiceDate] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [notes, setNotes] = useState("");
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [amount, setAmount] = useState("");
 
   const handlePrint = () => {
     window.print();
@@ -36,7 +41,7 @@ export default function App() {
             <MainDetails name={name} address={address} email={email} />
             <ClientDetails clientName={clientName} clientAddress={clientAddress} />
             <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
-            <Table />
+            <Table description={description} amount={amount} price={price} quantity={quantity} />
             <Notes notes={notes} />
             <Footer
               name={name}
@@ -310,6 +315,16 @@ export default function App() {
                 </label>
               </div>
             </div>
+            <TableFrom
+              setDescription={setDescription}
+              description={description}
+              setAmount={setAmount}
+              amount={amount}
+              setPrice={setPrice}
+              price={price}
+              setQuantity={setQuantity}
+              quantity={quantity}
+            />
 
             {/* client notes  */}
             <div className="mb-4 grid md:grid-cols-1 md:gap-6">
@@ -327,7 +342,7 @@ export default function App() {
                 ></textarea>
                 <label
                   htmlFor="notes"
-                  className="absolute top-1 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
                   Notes for Client
                 </label>

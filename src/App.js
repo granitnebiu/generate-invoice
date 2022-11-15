@@ -56,145 +56,287 @@ export default function App() {
           </div>
         ) : (
           <>
-            {/* name, address, eemail, phone, bank name, bank account number, website client name, client address, invoice number, invoice date, due date, table, notes,  */}
+            {/* name and address */}
+            <div className="my-4 grid md:grid-cols-2 md:gap-6">
+              {/* name */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  name="name"
+                  id="name"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <label
+                  htmlFor="name"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your name
+                </label>
+              </div>
+              {/* address */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  required
+                  value={address}
+                  autoComplete="off"
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+                <label
+                  htmlFor="address"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your address
+                </label>
+              </div>
+            </div>
+            {/* email, website and phone */}
+
+            <div className="mb-4 grid md:grid-cols-3 md:gap-6">
+              {/* email  */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  required
+                  autoComplete="off"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <label
+                  htmlFor="email"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your email
+                </label>
+              </div>
+              {/* website   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="url"
+                  name="website"
+                  id="website"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  required
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+                <label
+                  htmlFor="website"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your website
+                </label>
+              </div>
+              {/* phone   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="phone"
+                  name="phone"
+                  id="phone"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  autoComplete="off"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="phone"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your phone
+                </label>
+              </div>
+            </div>
+            {/* bankName and bankAccount   */}
+            <div className="mb-4 grid md:grid-cols-2 md:gap-6">
+              {/* bankName   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="bankName"
+                  id="bankName"
+                  autoComplete="off"
+                  value={bankName}
+                  onChange={(e) => setBankName(e.target.value)}
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="bankName"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Bank Name
+                </label>
+              </div>
+              {/* bankAccount   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="number"
+                  name="bankAccount"
+                  id="bankAccount"
+                  autoComplete="off"
+                  value={bankAccount}
+                  onChange={(e) => setBankAccount(e.target.value)}
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="bankAccount"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Bank Account Number
+                </label>
+              </div>
+            </div>
+
+            {/* clientName and client address   */}
+            <div className="mb-4 grid md:grid-cols-2 md:gap-6">
+              {/* clientName   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  name="clientName"
+                  id="clientName"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  required
+                  value={clientName}
+                  onChange={(e) => setClientName(e.target.value)}
+                />
+                <label
+                  htmlFor="clientName"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Client's Name
+                </label>
+              </div>
+              {/* clientAddress   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="clientAddress"
+                  id="clientAddress"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={clientAddress}
+                  onChange={(e) => setClientAddress(e.target.value)}
+                  required
+                />
+                <label
+                  htmlFor="clientAddress"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Client's Address
+                </label>
+              </div>
+            </div>
+            {/* invoiceNumber, invoiceDate, and DueDate    */}
+            <div className="mb-4 grid md:grid-cols-3 md:gap-6">
+              {/* invoiceNumber   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="invoiceNumber"
+                  id="invoiceNumber"
+                  placeholder=" "
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  autoComplete="off"
+                  value={invoiceNumber}
+                  onChange={(e) => setInvoiceNumber(e.target.value)}
+                />
+                <label
+                  htmlFor="invoiceNumber"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Invoice Number
+                </label>
+              </div>
+              {/* invoiceDate   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="date"
+                  name="invoiceDate"
+                  id="invoiceDate"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={invoiceDate}
+                  onChange={(e) => setInvoiceDate(e.target.value)}
+                />
+                <label
+                  htmlFor="invoiceDate"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Invoice Date
+                </label>
+              </div>
+              {/* Due date  */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="date"
+                  name="dueDate"
+                  id="dueDate"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0 pl-3  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                />
+                <label
+                  htmlFor="dueDate"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Enter your Due Date
+                </label>
+              </div>
+            </div>
+
+            {/* client notes  */}
+            <div className="mb-4 grid md:grid-cols-1 md:gap-6">
+              <div className="group relative z-0 mb-6 w-full">
+                <textarea
+                  name="notes"
+                  cols="30"
+                  rows="10"
+                  id="notes"
+                  autoComplete="off"
+                  placeholder=" "
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0 pl-3 text-sm font-bold text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                ></textarea>
+                <label
+                  htmlFor="notes"
+                  className="absolute top-1 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Notes for Client
+                </label>
+              </div>
+            </div>
             <div className="flex flex-col justify-center">
-              <label htmlFor="name">Enter your name</label>
-              <input
-                type="text"
-                name="text"
-                id="name"
-                placeholder="enter your name"
-                autoComplete="off"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <label htmlFor="address">Enter your address</label>
-              <input
-                type="text"
-                name="address"
-                id="address"
-                placeholder="enter your address"
-                autoComplete="off"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-              <label htmlFor="email">Enter your email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="enter your email"
-                autoComplete="off"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <label htmlFor="website">Enter your website</label>
-              <input
-                type="url"
-                name="website"
-                id="website"
-                placeholder="enter your website"
-                autoComplete="off"
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
-              />
-              <label htmlFor="phone">Enter your phone</label>
-              <input
-                type="phone"
-                name="phone"
-                id="phone"
-                placeholder="enter your phone"
-                autoComplete="off"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-
-              <label htmlFor="bankName">Enter your Bank Name</label>
-              <input
-                type="text"
-                name="bankName"
-                id="bankName"
-                placeholder="enter your Bank Name"
-                autoComplete="off"
-                value={bankName}
-                onChange={(e) => setBankName(e.target.value)}
-              />
-
-              <label htmlFor="bankAccount">Enter your Bank Account Number</label>
-              <input
-                type="number"
-                name="bankAccount"
-                id="bankAccount"
-                placeholder="enter your Bank Name Number"
-                autoComplete="off"
-                value={bankAccount}
-                onChange={(e) => setBankAccount(e.target.value)}
-              />
-              <label htmlFor="clientName">Enter your Client's Name</label>
-              <input
-                type="text"
-                name="clientName"
-                id="clientName"
-                placeholder="enter your Client's Name"
-                autoComplete="off"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-              />
-              <label htmlFor="clientAddress">Enter your Client's Address</label>
-              <input
-                type="text"
-                name="clientAddress"
-                id="clientAddress"
-                placeholder="enter yourClient's Address"
-                autoComplete="off"
-                value={clientAddress}
-                onChange={(e) => setClientAddress(e.target.value)}
-              />
-              <label htmlFor="invoiceNumber">Enter your Invoice Number</label>
-              <input
-                type="text"
-                name="invoiceNumber"
-                id="invoiceNumber"
-                placeholder="enter your Invoice Number"
-                autoComplete="off"
-                value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)}
-              />
-              <label htmlFor="invoiceDate">Enter your Invoice Date</label>
-              <input
-                type="date"
-                name="invoiceDate"
-                id="invoiceDate"
-                placeholder="enter your Invoice Date"
-                autoComplete="off"
-                value={invoiceDate}
-                onChange={(e) => setInvoiceDate(e.target.value)}
-              />
-              <label htmlFor="dueDate">Enter your Due Date</label>
-              <input
-                type="date"
-                name="dueDate"
-                id="dueDate"
-                placeholder="enter your Due Date"
-                autoComplete="off"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-              <label htmlFor="notes">Enter your Notes</label>
-              <textarea
-                name="notes"
-                cols="30"
-                rows="10"
-                id="notes"
-                value={notes}
-                placeholder="Additional notes to the client"
-                onChange={(e) => setNotes(e.target.value)}
-              ></textarea>
-
               <button
                 onClick={() => setShowInvoice(true)}
-                className="rounded border-2 border-blue-500 bg-blue-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-blue-500"
+                className="rounded border-2 border-red-500 bg-red-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-red-500"
               >
                 Preview Invoice
               </button>

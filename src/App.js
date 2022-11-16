@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ClientDetails from "src/components/ClientDetails";
 import Date from "src/components/Date";
 import Footer from "src/components/Footer";
@@ -7,6 +7,7 @@ import MainDetails from "src/components/MainDetails";
 import Notes from "src/components/Notes";
 import Table from "src/components/Table";
 import TableFrom from "src/components/TableFrom";
+import ReactToPrint from "react-to-print";
 
 export default function App() {
   const [showInvoice, setShowInvoice] = useState(false);
@@ -30,6 +31,8 @@ export default function App() {
   const [list, setList] = useState("");
   const [total, setTotal] = useState(0);
 
+  const componentRef = useRef();
+
   const handlePrint = () => {
     window.print();
   };
@@ -37,38 +40,48 @@ export default function App() {
   return (
     <>
       <main className="m-5 rounded bg-white p-5 shadow md:mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
+        <ReactToPrint
+          trigger={() => (
+            <button className="rounded border-2 border-gray-500 bg-gray-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500">
+              Print this out!
+            </button>
+          )}
+          content={() => componentRef.current}
+        />
         {showInvoice ? (
-          <div>
-            <Header handlePrint={handlePrint} />
-            <MainDetails name={name} address={address} email={email} />
-            <ClientDetails clientName={clientName} clientAddress={clientAddress} />
-            <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
-            <Table
-              description={description}
-              amount={amount}
-              price={price}
-              quantity={quantity}
-              list={list}
-              total={total}
-              setTotal={setTotal}
-            />
-            <Notes notes={notes} />
-            <Footer
-              name={name}
-              address={address}
-              email={email}
-              website={website}
-              phone={phone}
-              bankName={bankName}
-              bankAccount={bankAccount}
-            />
+          <>
+            <div className="p-5" ref={componentRef}>
+              <Header handlePrint={handlePrint} />
+              <MainDetails name={name} address={address} email={email} />
+              <ClientDetails clientName={clientName} clientAddress={clientAddress} />
+              <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
+              <Table
+                description={description}
+                amount={amount}
+                price={price}
+                quantity={quantity}
+                list={list}
+                total={total}
+                setTotal={setTotal}
+              />
+              <Notes notes={notes} />
+              <Footer
+                name={name}
+                address={address}
+                email={email}
+                website={website}
+                phone={phone}
+                bankName={bankName}
+                bankAccount={bankAccount}
+              />
+            </div>
             <button
               onClick={() => setShowInvoice(false)}
               className="mt-5 rounded border-2 border-blue-500 bg-blue-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-blue-500"
             >
               Edit Information
             </button>
-          </div>
+          </>
         ) : (
           <>
             {/* name and address */}

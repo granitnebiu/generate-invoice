@@ -3,6 +3,7 @@ import { BsTrash } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { BsCurrencyEuro } from "react-icons/bs";
 import { v4 as uuid } from "uuid";
+import { toast } from "react-toastify";
 
 export default function TableFrom({
   description,
@@ -25,19 +26,23 @@ export default function TableFrom({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newItems = {
-      id: unique_id,
-      description,
-      quantity,
-      price,
-      amount,
-    };
-    setDescription("");
-    setQuantity("");
-    setPrice("");
-    setAmount("");
-    setList([...list, newItems]);
-    setIsEditing(false);
+    if (!description || !quantity || !price) {
+      toast.error("Item Description, quantity and price is required");
+    } else {
+      const newItems = {
+        id: unique_id,
+        description,
+        quantity,
+        price,
+        amount,
+      };
+      setDescription("");
+      setQuantity("");
+      setPrice("");
+      setAmount("");
+      setList([...list, newItems]);
+      setIsEditing(false);
+    }
   };
   //calculate Items amount
   useEffect(() => {
@@ -86,7 +91,6 @@ export default function TableFrom({
               className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
               placeholder=" "
               autoComplete="off"
-              required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -106,7 +110,6 @@ export default function TableFrom({
               className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
               placeholder=" "
               autoComplete="off"
-              required
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
@@ -126,7 +129,6 @@ export default function TableFrom({
               className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
               placeholder=" "
               autoComplete="off"
-              required
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />

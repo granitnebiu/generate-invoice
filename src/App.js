@@ -27,6 +27,8 @@ export default function App() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
+  const [list, setList] = useState("");
+  const [total, setTotal] = useState(0);
 
   const handlePrint = () => {
     window.print();
@@ -41,7 +43,15 @@ export default function App() {
             <MainDetails name={name} address={address} email={email} />
             <ClientDetails clientName={clientName} clientAddress={clientAddress} />
             <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
-            <Table description={description} amount={amount} price={price} quantity={quantity} />
+            <Table
+              description={description}
+              amount={amount}
+              price={price}
+              quantity={quantity}
+              list={list}
+              total={total}
+              setTotal={setTotal}
+            />
             <Notes notes={notes} />
             <Footer
               name={name}
@@ -99,7 +109,7 @@ export default function App() {
                 />
                 <label
                   htmlFor="address"
-                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                  className=" absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform pl-3 text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
                   Enter your address
                 </label>
@@ -301,7 +311,7 @@ export default function App() {
                   type="date"
                   name="dueDate"
                   id="dueDate"
-                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0 pl-3  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
                   placeholder=" "
                   autoComplete="off"
                   value={dueDate}
@@ -324,6 +334,10 @@ export default function App() {
               price={price}
               setQuantity={setQuantity}
               quantity={quantity}
+              list={list}
+              setList={setList}
+              total={total}
+              setTotal={setTotal}
             />
 
             {/* client notes  */}

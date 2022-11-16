@@ -23,12 +23,12 @@ export default function Header({ handlePrint }) {
               Download
             </button>
 
-            <button
+            {/* <button
               onClick={handlePrint}
               className="rounded border-2 border-green-500 bg-green-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-green-500"
             >
               Send
-            </button>
+            </button> */}
           </div>
         </div>
       </header>

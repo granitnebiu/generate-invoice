@@ -40,16 +40,16 @@ export default function App() {
   return (
     <>
       <main className="m-5 rounded bg-white p-5 shadow md:mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
-        <ReactToPrint
-          trigger={() => (
-            <button className="rounded border-2 border-gray-500 bg-gray-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500">
-              Print this out!
-            </button>
-          )}
-          content={() => componentRef.current}
-        />
         {showInvoice ? (
           <>
+            <ReactToPrint
+              trigger={() => (
+                <button className="rounded border-2 border-gray-500 bg-gray-500 px-2  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500">
+                  Print
+                </button>
+              )}
+              content={() => componentRef.current}
+            />
             <div className="p-5" ref={componentRef}>
               <Header handlePrint={handlePrint} />
               <MainDetails name={name} address={address} email={email} />

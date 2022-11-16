@@ -8,6 +8,7 @@ import Notes from "src/components/Notes";
 import Table from "src/components/Table";
 import TableFrom from "src/components/TableFrom";
 import ReactToPrint from "react-to-print";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
 export default function App() {
   const [showInvoice, setShowInvoice] = useState(false);
@@ -32,9 +33,10 @@ export default function App() {
   const [total, setTotal] = useState(0);
 
   const componentRef = useRef();
+  const pdfExportComponent = useRef(null);
 
-  const handlePrint = () => {
-    window.print();
+  const handleExportWithMethod = (e) => {
+    savePDF(componentRef.current, { paper: "A4" });
   };
 
   return (
@@ -50,31 +52,40 @@ export default function App() {
               )}
               content={() => componentRef.current}
             />
-            <div className="p-5" ref={componentRef}>
-              <Header handlePrint={handlePrint} />
-              <MainDetails name={name} address={address} email={email} />
-              <ClientDetails clientName={clientName} clientAddress={clientAddress} />
-              <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
-              <Table
-                description={description}
-                amount={amount}
-                price={price}
-                quantity={quantity}
-                list={list}
-                total={total}
-                setTotal={setTotal}
-              />
-              <Notes notes={notes} />
-              <Footer
-                name={name}
-                address={address}
-                email={email}
-                website={website}
-                phone={phone}
-                bankName={bankName}
-                bankAccount={bankAccount}
-              />
-            </div>
+
+            <button
+              onClick={handleExportWithMethod}
+              className="rounded border-2 border-gray-500 bg-gray-500 px-2  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500"
+            >
+              Download
+            </button>
+            <PDFExport ref={pdfExportComponent} pageSize="A4">
+              <div className="h-full w-full p-5" ref={componentRef}>
+                <Header />
+                <MainDetails name={name} address={address} email={email} />
+                <ClientDetails clientName={clientName} clientAddress={clientAddress} />
+                <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
+                <Table
+                  description={description}
+                  amount={amount}
+                  price={price}
+                  quantity={quantity}
+                  list={list}
+                  total={total}
+                  setTotal={setTotal}
+                />
+                <Notes notes={notes} />
+                <Footer
+                  name={name}
+                  address={address}
+                  email={email}
+                  website={website}
+                  phone={phone}
+                  bankName={bankName}
+                  bankAccount={bankAccount}
+                />
+              </div>
+            </PDFExport>
             <button
               onClick={() => setShowInvoice(false)}
               className="mt-5 rounded border-2 border-blue-500 bg-blue-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-blue-500"

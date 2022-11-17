@@ -39,6 +39,7 @@ export default function Footer({ email, name, website, bankName, phone, bankAcco
           </li>
         </ul>
       </footer>
+      <div className="my-6 h-4 w-full bg-red-700"></div>
     </>
   );
 }

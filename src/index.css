@@ -20,3 +20,10 @@ code {
 button{
   user-select: none;
 }
+
+.paper-bg{
+  background-image: url("../src/images/bg-logo2.png");
+background-repeat: no-repeat;
+background-position:center center;
+background-size: cover;
+}

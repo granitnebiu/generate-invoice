@@ -9,13 +9,15 @@ import Table from "src/components/Table";
 import TableFrom from "src/components/TableFrom";
 import ReactToPrint from "react-to-print";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
 
 export default function App() {
   const [showInvoice, setShowInvoice] = useState(false);
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState("Auto Llaker 'Ximi'");
+  const [address, setAddress] = useState("Rruga e Gjilanit 93");
+  const [postalCode, setCityPostalCode] = useState("Presevë, Serbia, 17523");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+381638605367");
   const [bankName, setBankName] = useState("");
   const [bankAccount, setBankAccount] = useState("");
   const [website, setWebsite] = useState("");
@@ -44,25 +46,36 @@ export default function App() {
       <main className="m-5 rounded bg-white p-5 shadow md:mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
         {showInvoice ? (
           <>
-            <ReactToPrint
-              trigger={() => (
-                <button className="rounded border-2 border-gray-500 bg-gray-500 px-2  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500">
-                  Print
-                </button>
-              )}
-              content={() => componentRef.current}
-            />
+            <div className="flex gap-2">
+              <ReactToPrint
+                trigger={() => (
+                  <button className="rounded border-2 border-gray-500 bg-gray-500 px-2  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500">
+                    <AiOutlinePrinter />
+                  </button>
+                )}
+                content={() => componentRef.current}
+              />
 
-            <button
-              onClick={handleExportWithMethod}
-              className="rounded border-2 border-gray-500 bg-gray-500 px-2  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500"
-            >
-              Download
-            </button>
+              <button
+                onClick={handleExportWithMethod}
+                className="rounded border-2 border-gray-500 bg-gray-500 px-2  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-gray-500"
+              >
+                <AiOutlineDownload />
+              </button>
+            </div>
             <PDFExport ref={pdfExportComponent} pageSize="A4">
-              <div className="h-full w-full p-5" ref={componentRef}>
+              <div
+                className="paper-bg m-[30mm 45mm 30mm 45mm] h-[29.7cm] w-[21cm] p-5"
+                ref={componentRef}
+              >
                 <Header />
-                <MainDetails name={name} address={address} email={email} />
+                <MainDetails
+                  name={name}
+                  address={address}
+                  email={email}
+                  postalCode={postalCode}
+                  phone={phone}
+                />
                 <ClientDetails clientName={clientName} clientAddress={clientAddress} />
                 <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
                 <Table
@@ -95,8 +108,8 @@ export default function App() {
           </>
         ) : (
           <>
-            {/* name and address */}
-            <div className="my-4 grid md:grid-cols-2 md:gap-6">
+            {/* name and address, street */}
+            <div className="my-4 grid md:grid-cols-3 md:gap-6">
               {/* name */}
               <div className="group relative z-0 mb-6 w-full">
                 <input
@@ -136,6 +149,25 @@ export default function App() {
                   className=" absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform pl-3 text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
                   Enter your address
+                </label>
+              </div>
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="cityPostalCode"
+                  id="cityPostalCode"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  required
+                  value={postalCode}
+                  autoComplete="off"
+                  onChange={(e) => setCityPostalCode(address.target.value)}
+                />
+                <label
+                  htmlFor="cityPostalCode"
+                  className=" absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform pl-3 text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  City/PostalCode
                 </label>
               </div>
             </div>

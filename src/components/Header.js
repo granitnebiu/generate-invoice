@@ -1,11 +1,14 @@
 import React from "react";
+import LOGO from "../../src/images/logo-ximi.png";
 
 export default function Header({ handlePrint }) {
   return (
     <>
+      <div className="my-6 h-4 w-full bg-red-700"></div>
       <header className="mb-5 flex flex-col items-center justify-center  xl:flex-row xl:justify-between  ">
-        <div>
+        <div className="flex w-full justify-between">
           <h1 className="mb-3 text-4xl font-bold uppercase tracking-wide">Invoice</h1>
+          <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
         </div>
         {/* <div className="flex flex-wrap items-center justify-between gap-x-2">
           <button

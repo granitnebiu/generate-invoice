@@ -11,7 +11,7 @@ import ReactToPrint from "react-to-print";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
 
-export default function Invoce() {
+export default function Invoice() {
   const [showInvoice, setShowInvoice] = useState(false);
   const [name, setName] = useState("Auto Llaker 'Ximi'");
   const [address, setAddress] = useState("Rruga e Gjilanit 93");

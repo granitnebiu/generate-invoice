@@ -1,33 +1,47 @@
 import React from "react";
+import Input from "src/components/Input";
+import Button from "src/components/Button";
 
 export default function Login() {
   return (
-    <div className="login">
-      <h1 className="text-center">Choose a Login Method</h1>
-      <div className="flex items-center justify-between">
-        <div className="space-y-2">
-          <div className=" google">
-            <img src="" alt="" className="icon" />
-            Google
-          </div>
-          <div className=" facebook">
-            <img src="" alt="" className="icon" />
-            Facebook
-          </div>
-          <div className=" github">
-            <img src="" alt="" className="icon" />
-            Github
-          </div>
-        </div>
-        <div className="">
-          <p className="or">OR</p>
-        </div>
-        <div className="flex flex-col">
-          <input type="text" className="w-full" placeholder="Username" />
-          <input type="text" placeholder="Password" />
-          <button className="submit">Login</button>
+    <form>
+      <h3>Sign In</h3>
+      <div className="mt-16">
+        <Input
+          type="email"
+          name="email"
+          id="email"
+          // value={email}
+          label="Your Email"
+          required="true"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          // value={password}
+          label="Your Password"
+          required="true"
+          // onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-3">
+        <div className="custom-control custom-checkbox">
+          <input type="checkbox" className="custom-control-input" id="customCheck1" />
+          <label className="custom-control-label" htmlFor="customCheck1">
+            Remember me
+          </label>
         </div>
       </div>
-    </div>
+
+      <Button btnName="Submit" btnType="submit" />
+
+      <p className="forgot-password text-right">
+        <a href="/sing-up">Sing Up</a>
+      </p>
+    </form>
   );
 }

@@ -80,20 +80,43 @@ app.post("/login-user", async (req, res) => {
   const { email, password } = req.body;
   //check if the user exists or not
   const user = await User.findOne({ email });
+  console.log(user);
   if (!user) {
     return res.json({ error: "User not found" });
   }
   if (await bcrypt.compare(password, user.password)) {
     //sign in and create new token with random string that we created JWT_SECRET
-    const token = jwt.sign({}, JWT_SECRET);
+    const token = jwt.sign({ email: user.email }, JWT_SECRET);
     //201 means the request has been made successfully
     if (res.status(201)) {
-      return res.json({ status: "ok", data: token });
+      return res.json({
+        status: "ok",
+        token: token,
+      });
     } else {
       return res.json({ error: "error" });
     }
   }
   res.json({ status: "error", error: "invalid password" });
+});
+
+//creating api to get user data (user logged in)
+app.post("/userData", async (req, res) => {
+  //getting the data base on token
+  const { token } = req.body;
+  try {
+    //verifying the token
+    const user = jwt.verify(token, JWT_SECRET);
+    // console.log(user);
+    const userEmail = user.email;
+    User.findOne({ email: userEmail })
+      .then((data) => {
+        res.send({ status: "ok", data: data });
+      })
+      .catch((error) => {
+        res.send({ status: "error", data: error });
+      });
+  } catch (error) {}
 });
 
 app.listen(port, () => {

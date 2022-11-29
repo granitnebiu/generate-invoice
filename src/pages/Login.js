@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
+import { BsWindowSidebar } from "react-icons/bs";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,12 @@ export default function Login() {
         },
       })
       .then(function (response) {
+        console.log(response);
+        if (response.data.status === "ok") {
+          alert("login successfully");
+          window.localStorage.setItem("token", response.data.token);
+          window.location.href = "./invoice";
+        }
         console.log(response.data);
       })
       .catch(function (error) {

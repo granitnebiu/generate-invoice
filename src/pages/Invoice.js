@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ClientDetails from "src/components/ClientDetails";
 import Date from "src/components/Date";
 import Footer from "src/components/Footer";
@@ -10,6 +10,7 @@ import TableFrom from "src/components/TableFrom";
 import ReactToPrint from "react-to-print";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
+import axios from "axios";
 
 export default function Invoice() {
   const [showInvoice, setShowInvoice] = useState(false);
@@ -40,8 +41,37 @@ export default function Invoice() {
   const handleExportWithMethod = (e) => {
     savePDF(componentRef.current, { paper: "A4" });
   };
+
+  const [userData, setUserData] = useState();
+
+  const userToken = {
+    token: window.localStorage.getItem("token"),
+  };
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/userData", userToken, {
+        crossDomain: true,
+        headers: {
+          Accept: "application/json",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then(function (response) {
+        setUserData(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  console.log(userData);
+
   return (
     <>
+      <h1>{userData.firstName}</h1>
+      <h1>{userData.lastName}</h1>
+      <h1>{userData.email}</h1>
       <main className="m-5 rounded bg-white p-5 shadow md:mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
         {showInvoice ? (
           <>

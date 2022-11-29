@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
@@ -35,6 +35,7 @@ export default function SignUp() {
 
     // console.log(addUser);
   };
+
   return (
     <form autoComplete="off" onSubmit={handleSubmit}>
       <h3>Sign Up</h3>

@@ -1,30 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "src/components/Input";
 import Button from "src/components/Button";
+import axios from "axios";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const LoginUser = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:5000/login-user", LoginUser, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // console.log(addUser);
+  };
+
   return (
-    <form>
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <h3>Sign In</h3>
       <div className="mt-16">
         <Input
           type="email"
           name="email"
           id="email"
-          // value={email}
+          value={email}
           label="Your Email"
-          required="true"
-          // onChange={(e) => setEmail(e.target.value)}
+          required={true}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <Input
           type="password"
           name="password"
           id="password"
-          // value={password}
+          value={password}
           label="Your Password"
-          required="true"
-          // onChange={(e) => setPassword(e.target.value)}
+          required={true}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 

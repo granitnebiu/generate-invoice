@@ -65,13 +65,26 @@ export default function Invoice() {
       });
   }, []);
 
-  console.log(userData);
+  if (userData === undefined) {
+    return;
+  }
+
+  // console.log(userData);
 
   return (
     <>
-      <h1>{userData.firstName}</h1>
-      <h1>{userData.lastName}</h1>
-      <h1>{userData.email}</h1>
+      <div className="flex w-full items-center justify-end space-x-2 px-8 pt-8">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500">
+          <p className="font-bold uppercase text-white">{userData.firstName.charAt(0)}</p>
+        </div>
+        <div className="leading-0">
+          <p className="text-[14px] font-bold capitalize text-red-500">
+            {userData.firstName} {userData.lastName}
+          </p>
+          <p className="text-[10px] font-medium text-gray-500">{userData.email}</p>
+        </div>
+      </div>
+
       <main className="m-5 rounded bg-white p-5 shadow md:mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
         {showInvoice ? (
           <>

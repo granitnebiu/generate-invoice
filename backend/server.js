@@ -11,6 +11,10 @@ app.use(cors());
 //encrypting password
 const bcrypt = require("bcryptjs");
 
+//to generate token
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "hjskdfhsdj12789gggggyytyte3s7892334sadwq3234r43gf././/.23324/fdgfdg878";
 //connect to MongoDB
 const mongoUrl =
   "mongodb+srv://granit:Granit123@cluster0.a4ej3ei.mongodb.net/?retryWrites=true&w=majority";
@@ -68,6 +72,28 @@ app.post("/register", async (req, res) => {
   } catch (error) {
     res.send({ status: "something went wrong try again" });
   }
+});
+
+//login user
+app.post("/login-user", async (req, res) => {
+  //getting email and password
+  const { email, password } = req.body;
+  //check if the user exists or not
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.json({ error: "User not found" });
+  }
+  if (await bcrypt.compare(password, user.password)) {
+    //sign in and create new token with random string that we created JWT_SECRET
+    const token = jwt.sign({}, JWT_SECRET);
+    //201 means the request has been made successfully
+    if (res.status(201)) {
+      return res.json({ status: "ok", data: token });
+    } else {
+      return res.json({ error: "error" });
+    }
+  }
+  res.json({ status: "error", error: "invalid password" });
 });
 
 app.listen(port, () => {

@@ -171,19 +171,22 @@ export default function SignUp() {
         )}
         {/* END OF PHONE NUMBER  */}
         {/* OTP  */}
-        <Input
-          type="number"
-          label="Your OTP"
-          required={true}
-          onChange={(e) => setOtp(e.target.value)}
-        />
         {verifyOtpButton === true && (
-          <Button
-            extraClass={`w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
-            onClick={() => VerifyCode()}
-            btnType="button"
-            btnName="Verify OTP"
-          />
+          <>
+            <Input
+              type="number"
+              label="Your OTP"
+              required={true}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+
+            <Button
+              extraClass={`w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
+              onClick={() => VerifyCode()}
+              btnType="button"
+              btnName="Verify OTP"
+            />
+          </>
         )}
         {/* END OF OTP  */}
         <Input

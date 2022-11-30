@@ -1,6 +1,16 @@
 import React from "react";
 
-export default function Input({ id, type, name, value, onChange, required, label }) {
+export default function Input({
+  id,
+  type,
+  name,
+  value,
+  onChange,
+  required,
+  label,
+  styles = null,
+  showHelperText = false,
+}) {
   return (
     <div className="group relative z-0 mb-6 w-full">
       <input
@@ -13,6 +23,7 @@ export default function Input({ id, type, name, value, onChange, required, label
         required={required}
         value={value}
         onChange={onChange}
+        style={styles}
       />
       <label
         htmlFor={name}
@@ -20,6 +31,11 @@ export default function Input({ id, type, name, value, onChange, required, label
       >
         {label}
       </label>
+      {showHelperText === true && (
+        <p className="pt-1 text-[10px] text-gray-400">
+          example: 62123123, no zero, no prefix, no plus
+        </p>
+      )}
     </div>
   );
 }

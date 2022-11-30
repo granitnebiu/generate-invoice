@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -27,7 +28,12 @@ export default function SignUp() {
         },
       })
       .then(function (response) {
-        console.log(response.data);
+        toast.success("User has been registered");
+        const interval = setInterval(() => {
+          window.location.href = "./sign-in";
+        }, 2000);
+        return () => clearInterval(interval);
+        // console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);

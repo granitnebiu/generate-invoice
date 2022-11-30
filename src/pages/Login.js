@@ -3,6 +3,7 @@ import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,14 +27,18 @@ export default function Login() {
       .then(function (response) {
         console.log(response);
         if (response.data.status === "ok") {
-          alert("login successfully");
+          toast.success("User logged in");
           window.localStorage.setItem("token", response.data.token);
-          window.location.href = "./invoice";
+          const interval = setInterval(() => {
+            window.location.href = "./invoice";
+          }, 2000);
+          return () => clearInterval(interval);
         }
-        console.log(response.data);
+        // console.log(response.data.error);
+        toast.error(response.data.error);
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 
     // console.log(addUser);

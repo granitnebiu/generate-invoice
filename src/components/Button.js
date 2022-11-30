@@ -5,7 +5,7 @@ export default function Button({ onClick, btnName, btnType, extraClass = "" }) {
     <button
       type={btnType}
       onClick={onClick}
-      className={`${extraClass} hover:text-primary" rounded border-2 border-primary bg-primary  px-8 py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent
+      className={`${extraClass} rounded border-2 border-primary bg-primary px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-primary
     `}
     >
       {btnName}

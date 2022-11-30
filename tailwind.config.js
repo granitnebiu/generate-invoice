@@ -6,6 +6,9 @@ module.exports = {
       backgroundImage: {
         // "paper-bg": "url('/src/images/bg-logo.png')",
       },
+      colors: {
+        primary: "#EF4444",
+      },
     },
   },
   plugins: [],

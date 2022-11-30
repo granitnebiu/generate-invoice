@@ -4,6 +4,7 @@ import Button from "src/components/Button";
 import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
 import { toast } from "react-toastify";
+import LOGO from "../../src/images/logo-ximi.png";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -45,9 +46,10 @@ export default function Login() {
   };
 
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
-      <h3>Sign In</h3>
-      <div className="mt-16">
+    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-10">
+      <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
+      <h3 className="text-2xl font-bold text-primary">Sign In</h3>
+      <form className="w-96" autoComplete="off" onSubmit={handleSubmit}>
         <Input
           type="email"
           name="email"
@@ -67,22 +69,22 @@ export default function Login() {
           required={true}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
 
-      <div className="mb-3">
-        <div className="custom-control custom-checkbox">
-          <input type="checkbox" className="custom-control-input" id="customCheck1" />
-          <label className="custom-control-label" htmlFor="customCheck1">
+        <div className="mb-3 flex select-none space-x-3">
+          <input type="checkbox" className="custom-control-input" id="remember_me" />
+          <label className="custom-control-label" htmlFor="remember_me">
             Remember me
           </label>
         </div>
-      </div>
 
-      <Button btnName="Submit" btnType="submit" />
+        <Button btnName="Submit" btnType="submit" />
 
-      <p className="forgot-password text-right">
-        <a href="/sing-up">Sing Up</a>
-      </p>
-    </form>
+        <p className="forgot-password select-none text-right">
+          <a className="hover:text-primary" href="/sing-up">
+            Register User
+          </a>
+        </p>
+      </form>
+    </div>
   );
 }

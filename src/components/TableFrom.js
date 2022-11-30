@@ -158,7 +158,7 @@ export default function TableFrom({
 
         <button
           type="submit"
-          className="my-4 rounded border-2 border-red-500 bg-red-500 px-4  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-red-500"
+          className="my-4 rounded border-2 border-primary bg-primary px-4  py-1 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-primary"
         >
           {isEditing ? "Save Changes" : " Add New Item"}
         </button>

@@ -3,6 +3,7 @@ import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
 import { toast } from "react-toastify";
+import LOGO from "../../src/images/logo-ximi.png";
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -43,9 +44,10 @@ export default function SignUp() {
   };
 
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
-      <h3>Sign Up</h3>
-      <div className="mt-16">
+    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-8">
+      <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
+      <h3 className="text-2xl font-bold text-primary">Register User</h3>
+      <form className="w-96" autoComplete="off" onSubmit={handleSubmit}>
         <Input
           type="text"
           name="firstName"
@@ -82,13 +84,16 @@ export default function SignUp() {
           required={true}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
 
-      <Button btnType="submit" btnName=" Sign Up" />
+        <Button btnType="submit" btnName=" Sign Up" />
 
-      <p className="forgot-password text-right">
-        Already registered <a href="/sign-in">sign in?</a>
-      </p>
-    </form>
+        <p className="forgot-password text-right">
+          Already registered{" "}
+          <a className="font-medium text-primary hover:text-gray-500" href="/sign-in">
+            sign in?
+          </a>
+        </p>
+      </form>
+    </div>
   );
 }

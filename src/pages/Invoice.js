@@ -74,11 +74,11 @@ export default function Invoice() {
   return (
     <>
       <div className="flex w-full items-center justify-end space-x-2 px-8 pt-8">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
           <p className="font-bold uppercase text-white">{userData.firstName.charAt(0)}</p>
         </div>
         <div className="leading-0">
-          <p className="text-[14px] font-bold capitalize text-red-500">
+          <p className="text-[14px] font-bold capitalize text-primary">
             {userData.firstName} {userData.lastName}
           </p>
           <p className="text-[10px] font-medium text-gray-500">{userData.email}</p>
@@ -463,7 +463,7 @@ export default function Invoice() {
             <div className="flex flex-col justify-center">
               <button
                 onClick={() => setShowInvoice(true)}
-                className="rounded border-2 border-red-500 bg-red-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-red-500"
+                className="rounded border-2 border-primary bg-primary px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-primary"
               >
                 Preview Invoice
               </button>

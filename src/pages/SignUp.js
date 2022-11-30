@@ -28,7 +28,7 @@ export default function SignUp() {
       {
         size: "invisible",
         callback: (response) => {
-          onSignInSubmit();
+          onSendOTP();
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           // ...
         },
@@ -50,7 +50,7 @@ export default function SignUp() {
   };
 
   //Send a verification code to the user's phone
-  const onSignInSubmit = () => {
+  const onSendOTP = () => {
     onCaptchaVerify();
     const phoneNumber = "+381" + mobile;
     console.log(phoneNumber);
@@ -164,7 +164,7 @@ export default function SignUp() {
             extraClass={`${
               showVerified ? "!bg-green-500 !border-transparent" : ""
             } w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
-            onClick={() => onSignInSubmit()}
+            onClick={() => onSendOTP()}
             btnType="button"
             btnName={`${showVerified ? "Verified" : "Send OTP"}`}
           />

@@ -9,11 +9,14 @@ import Table from "src/components/Table";
 import TableFrom from "src/components/TableFrom";
 import ReactToPrint from "react-to-print";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
-import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
+import { AiOutlineDownload, AiOutlinePrinter, AiOutlineLogout } from "react-icons/ai";
+import { BiLogOut, BiReset } from "react-icons/bi";
+
 import axios from "axios";
 
 export default function Invoice() {
   const [showInvoice, setShowInvoice] = useState(false);
+  const [active, setActive] = useState(false);
   const [name, setName] = useState("Auto Llaker 'Ximi'");
   const [address, setAddress] = useState("Rruga e Gjilanit 93");
   const [postalCode, setCityPostalCode] = useState("Presevë, Serbia, 17523");
@@ -73,7 +76,10 @@ export default function Invoice() {
 
   return (
     <>
-      <div className="flex w-full items-center justify-end space-x-2 px-8 pt-8">
+      <div
+        onClick={() => setActive(!active)}
+        className=" relative flex w-full select-none items-center justify-end space-x-2 px-8 pt-8"
+      >
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
           <p className="font-bold uppercase text-white">{userData.firstName.charAt(0)}</p>
         </div>
@@ -82,6 +88,21 @@ export default function Invoice() {
             {userData.firstName} {userData.lastName}
           </p>
           <p className="text-[10px] font-medium text-gray-500">{userData.email}</p>
+        </div>
+
+        <div
+          className={`${
+            active ? "hidden" : "z-50 block"
+          } absolute  top-20  rounded-xl bg-white p-4 `}
+        >
+          <p className=" flex items-center space-x-2 text-[14px] hover:text-primary">
+            <BiLogOut />
+            <span>Log out</span>
+          </p>
+          <p className=" flex items-center space-x-2 text-[14px] hover:text-primary">
+            <BiReset />
+            <span>Reset Password</span>
+          </p>
         </div>
       </div>
 

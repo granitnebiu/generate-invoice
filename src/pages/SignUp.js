@@ -85,8 +85,6 @@ export default function SignUp() {
       })
       .catch((error) => {
         alert("Invalid OTP");
-        setShowVerified(false);
-        setVerifyOtpButton(true);
         // User couldn't sign in (bad verification code?)
         // ...
       });

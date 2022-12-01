@@ -19,7 +19,7 @@ export default function Input({
         id={id}
         className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
         placeholder=" "
-        autoComplete="off"
+        autoComplete="new-password"
         required={required}
         value={value}
         onChange={onChange}

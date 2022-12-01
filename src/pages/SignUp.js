@@ -14,7 +14,6 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobile, setMobile] = useState("");
-  console.log(mobile);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyButton, setVerifyButton] = useState(false);

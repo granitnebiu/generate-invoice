@@ -9,7 +9,7 @@ import Table from "src/components/Table";
 import TableFrom from "src/components/TableFrom";
 import ReactToPrint from "react-to-print";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
-import { AiOutlineDownload, AiOutlinePrinter, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
 import { BiLogOut, BiReset } from "react-icons/bi";
 
 import axios from "axios";
@@ -66,7 +66,7 @@ export default function Invoice() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  });
 
   if (userData === undefined) {
     return;

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
-import { BsWindowSidebar } from "react-icons/bs";
 import { toast } from "react-toastify";
 import LOGO from "../../src/images/logo-ximi.png";
 

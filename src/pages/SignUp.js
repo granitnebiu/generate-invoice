@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
-import { toast } from "react-toastify";
 import LOGO from "../../src/images/logo-ximi.png";
+import { toast } from "react-toastify";
 
 //sing up via phone number
 import firebase from "src/utils/firebase_config";
@@ -23,18 +23,19 @@ export default function SignUp() {
 
   //Set up the reCAPTCHA verifier
   const onCaptchaVerify = () => {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {
-        size: "invisible",
-        callback: (response) => {
-          onSendOTP();
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          // ...
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            onSendOTP();
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+          },
         },
-      },
-      auth
-    );
+        auth
+      );
+    }
   };
 
   useEffect(() => {
@@ -60,13 +61,13 @@ export default function SignUp() {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        alert("otp sended");
+        toast.info("OTP sended");
         setVerifyOtpButton(true);
       })
       .catch((error) => {
-        alert("you have tried to many times");
-        // Error; SMS not sent
-        // ...
+        if (error) {
+          toast.error("Error; SMS not sent. You have tried to many times");
+        }
       });
   };
 
@@ -76,17 +77,16 @@ export default function SignUp() {
       .confirm(otp)
       .then((result) => {
         // User signed in successfully.
-        const user = result.user;
+        // const user = result.user;
         // console.log(user);
-        alert("Verification done");
+        toast.success("Verification done");
+
         setShowVerified(true);
         setVerifyOtpButton(false);
         // ...
       })
       .catch((error) => {
-        alert("Invalid OTP");
-        // User couldn't sign in (bad verification code?)
-        // ...
+        toast.error("User couldn't verify phone number (bad verification code?)");
       });
   };
 
@@ -125,7 +125,7 @@ export default function SignUp() {
           toast.error(error);
         });
     } else {
-      alert("Please Verify Phone Number");
+      toast.error("Please Verify Phone Number");
     }
     // console.log(addUser);
   };
@@ -169,10 +169,13 @@ export default function SignUp() {
         {verifyButton === true && (
           <Button
             extraClass={`${
-              showVerified ? "!bg-green-500 !border-transparent" : ""
+              showVerified
+                ? "!bg-green-500 cursor-no-drop hover:!bg-green-300 !border-transparent"
+                : ""
             } w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
             onClick={() => onSendOTP()}
             btnType="button"
+            disabled={showVerified ? true : false}
             btnName={`${showVerified ? "Verified" : "Send OTP"}`}
           />
         )}

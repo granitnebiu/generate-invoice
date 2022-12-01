@@ -4,9 +4,9 @@ import Button from "src/components/Button";
 import axios from "axios";
 import { toast } from "react-toastify";
 import LOGO from "../../src/images/logo-ximi.png";
-import { AiFillLock, AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai";
 
-export default function Login() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center space-y-10">
       <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
-      <h3 className="text-2xl font-bold text-primary">Sign In</h3>
+      <h3 className="text-2xl font-bold text-primary">Forgot Password</h3>
       <form className="w-96" autoComplete="off" onSubmit={handleSubmit}>
         <Input
           type="email"
@@ -60,29 +60,12 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          label="Your Password"
-          required={true}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
         <Button btnName="Submit" btnType="submit" />
-        <div className="mt-4 flex justify-between">
-          <p className="forgot-password select-none ">
-            <a className="flex items-center gap-x-1 hover:text-primary" href="/forgot-password">
-              <AiFillLock /> Forgot Password
-            </a>
-          </p>
-          <p className="forgot-password select-none ">
-            <a className="flex items-center gap-x-1 hover:text-primary" href="/sing-up">
-              <AiOutlineLogin /> Register User
-            </a>
-          </p>
-        </div>
+        <p className="forgot-password flex select-none justify-end">
+          <a className="flex items-center gap-x-1  hover:text-primary" href="/sing-up">
+            <AiOutlineLogin /> Register User
+          </a>
+        </p>
       </form>
     </div>
   );

@@ -54,7 +54,7 @@ export default function SignUp() {
   const onSendOTP = () => {
     onCaptchaVerify();
     const phoneNumber = "+381" + mobile;
-    console.log(phoneNumber);
+    // console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
@@ -78,7 +78,7 @@ export default function SignUp() {
       .then((result) => {
         // User signed in successfully.
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         alert("Verification done");
         setShowVerified(true);
         setVerifyOtpButton(false);
@@ -111,7 +111,11 @@ export default function SignUp() {
           },
         })
         .then(function (response) {
-          toast.success("User has been registered");
+          if (response.data.status === "OK") {
+            toast.success("User has been registered");
+          } else {
+            toast.error(response.data.error);
+          }
           const interval = setInterval(() => {
             // window.location.href = "./sign-in";
           }, 2000);
@@ -119,7 +123,7 @@ export default function SignUp() {
           // console.log(response.data);
         })
         .catch(function (error) {
-          console.log(error);
+          toast.error(error);
         });
     } else {
       alert("Please Verify Phone Number");

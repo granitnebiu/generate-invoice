@@ -52,7 +52,7 @@ require("./userDetails");
 const User = mongoose.model("UserInfo");
 //api for registering a user
 app.post("/register", async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, mobile, email, password } = req.body;
   //encrypt password
   const encryptedPassword = await bcrypt.hash(password, 10);
   try {
@@ -65,6 +65,7 @@ app.post("/register", async (req, res) => {
     await User.create({
       firstName: firstName,
       lastName: lastName,
+      mobile: mobile,
       email: email,
       password: encryptedPassword,
     });

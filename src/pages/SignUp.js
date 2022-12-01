@@ -14,6 +14,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobile, setMobile] = useState("");
+  console.log(mobile);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyButton, setVerifyButton] = useState(false);
@@ -112,7 +113,7 @@ export default function SignUp() {
         .then(function (response) {
           toast.success("User has been registered");
           const interval = setInterval(() => {
-            window.location.href = "./sign-in";
+            // window.location.href = "./sign-in";
           }, 2000);
           return () => clearInterval(interval);
           // console.log(response.data);
@@ -153,7 +154,10 @@ export default function SignUp() {
         {/* Phone Number */}
         <Input
           type="number"
+          name="mobile"
+          id="mobile"
           label="Your Phone Number"
+          value={mobile}
           required={true}
           onChange={(e) => ChangeMobile(e)}
           showHelperText={true}

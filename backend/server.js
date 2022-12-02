@@ -11,7 +11,7 @@ app.use(cors());
 //encrypting password
 const bcrypt = require("bcryptjs");
 
-//to generate token
+//to generate json token
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = "hjskdfhsdj12789gggggyytyte3s7892334sadwq3234r43gf././/.23324/fdgfdg878";
@@ -19,6 +19,7 @@ const JWT_SECRET = "hjskdfhsdj12789gggggyytyte3s7892334sadwq3234r43gf././/.23324
 const mongoUrl =
   "mongodb+srv://granit:Granit123@cluster0.a4ej3ei.mongodb.net/?retryWrites=true&w=majority";
 
+//connected to MongoDB
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
@@ -48,7 +49,7 @@ app.post("/post", async (req, res) => {
 /**** SIGNUP USER ****/
 //importing SCHEMA
 require("./userDetails");
-//creating new user
+//creating new user Importing user model
 const User = mongoose.model("UserInfo");
 //api for registering a user
 app.post("/register", async (req, res) => {
@@ -122,4 +123,52 @@ app.post("/userData", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running son ${port}`);
+});
+
+//creating api forget password
+app.post("/forgot-password", async (req, res) => {
+  //getting the user email
+  const { email } = req.body;
+
+  try {
+    //finding the user with email
+    const userExists = await User.findOne({ email });
+    //checking if the user exists or not
+    if (!userExists) {
+      return res.json({ status: "User does not exists" });
+    }
+
+    //generating new token which will be sended to our user
+    const secret = JWT_SECRET + userExists.password;
+    //create the token
+    const token = jwt.sign({ email: userExists.email, id: userExists.id }, secret, {
+      expiresIn: "5m",
+    });
+    const link = `http://localhost:5000/reset-password/${userExists.id}/${token}`;
+    console.log(link);
+
+    //send response to user
+    if (userExists) {
+      return res.json({ status: "Reset Password Sended", info: "ok" });
+    }
+  } catch (error) {}
+});
+
+app.get("/reset-password/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  console.log(req.params);
+  const userExists = await User.findOne({ _id: id });
+  if (!userExists) {
+    return res.json({ status: "User does not exists" });
+  }
+  //we need the secret to verify if the secret belong to us or not
+  const secret = JWT_SECRET + userExists.password;
+  //checking if the user is the same within our database
+  try {
+    //using the function of jwt to verify
+    const verify = jwt.verify(token, secret);
+    res.send("verified");
+  } catch (error) {
+    res.send("not verified");
+  }
 });

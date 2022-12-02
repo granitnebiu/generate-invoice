@@ -12,13 +12,12 @@ export default function ForgotPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const LoginUser = {
-      email: email,
-      password: password,
-    };
 
+    const userEmail = {
+      email: email,
+    };
     axios
-      .post("http://localhost:5000/login-user", LoginUser, {
+      .post("http://localhost:5000/forgot-password", userEmail, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -27,18 +26,15 @@ export default function ForgotPassword() {
       })
       .then(function (response) {
         console.log(response);
-        if (response.data.status === "ok") {
-          toast.success("User logged in");
-          window.localStorage.setItem("token", response.data.token);
-          const interval = setInterval(() => {
-            window.location.href = "./invoice";
-          }, 2000);
-          return () => clearInterval(interval);
+        if (response.data.info === "ok") {
+          toast.success(response.data.status);
+        } else {
+          toast.error(response.data.status);
         }
-        // console.log(response.data.error);
-        toast.error(response.data.error);
       })
       .catch(function (error) {
+        console.log("this is error" + error);
+        toast.error(error.data.error);
         // console.log(error);
       });
 

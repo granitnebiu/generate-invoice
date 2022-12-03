@@ -66,7 +66,7 @@ export default function Invoice() {
       .catch(function (error) {
         console.log(error);
       });
-  });
+  }, []);
 
   if (userData === undefined) {
     return;

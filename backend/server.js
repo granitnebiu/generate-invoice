@@ -3,6 +3,9 @@ const app = express();
 const mongoose = require("mongoose");
 const port = 5000;
 app.use(express.json());
+//to show html and javascript in nodejs
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: false }));
 
 //adding package Cross-Origin Resource Sharing
 //to communicate front with backend
@@ -167,8 +170,43 @@ app.get("/reset-password/:id/:token", async (req, res) => {
   try {
     //using the function of jwt to verify
     const verify = jwt.verify(token, secret);
-    res.send("verified");
+    res.render("index", {
+      email: verify.email,
+      status: "Password was not changed, something went wrong",
+    });
   } catch (error) {
-    res.send("not verified");
+    res.sendStatus(404);
+  }
+});
+
+app.post("/reset-password/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
+  const userExists = await User.findOne({ _id: id });
+  if (!userExists) {
+    return res.json({ status: "User does not exists" });
+  }
+  //we need the secret to verify if the secret belong to us or not
+  const secret = JWT_SECRET + userExists.password;
+  //checking if the user is the same within our database
+  try {
+    //using the function of jwt to verify
+    const verify = jwt.verify(token, secret);
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    await User.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          password: encryptedPassword,
+        },
+      }
+    );
+
+    res.render("index", { email: verify.email, status: "password updated" });
+    // res.json({ status: "password updated" });
+  } catch (error) {
+    res.json({ status: "Something when wrong" });
   }
 });

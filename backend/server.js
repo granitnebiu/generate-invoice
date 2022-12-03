@@ -11,6 +11,10 @@ app.use(express.urlencoded({ extended: false }));
 //to communicate front with backend
 const cors = require("cors");
 app.use(cors());
+
+//using css
+app.use(express.static(__dirname + "/public"));
+
 //encrypting password
 const bcrypt = require("bcryptjs");
 

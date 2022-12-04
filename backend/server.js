@@ -20,6 +20,8 @@ const bcrypt = require("bcryptjs");
 
 //to generate json token
 const jwt = require("jsonwebtoken");
+//send email from nodejs
+var nodemailer = require("nodemailer");
 
 const JWT_SECRET = "hjskdfhsdj12789gggggyytyte3s7892334sadwq3234r43gf././/.23324/fdgfdg878";
 //connect to MongoDB
@@ -152,6 +154,29 @@ app.post("/forgot-password", async (req, res) => {
       expiresIn: "5m",
     });
     const link = `http://localhost:5000/reset-password/${userExists.id}/${token}`;
+    //send email from nodejs
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "mailer.app.user@gmail.com",
+        pass: "nvkvtpatwiozfcrg",
+      },
+    });
+
+    var mailOptions = {
+      from: "youremail@gmail.com",
+      to: userExists.email,
+      subject: "Password Reset",
+      text: link,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
     console.log(link);
 
     //send response to user

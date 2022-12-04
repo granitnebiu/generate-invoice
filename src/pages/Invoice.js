@@ -83,6 +83,21 @@ export default function Invoice() {
     );
   }
 
+  //log out
+  const logOut = (e) => {
+    e.stopPropagation();
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("user");
+    window.location.href = "/sign-in";
+    window.localStorage.clear();
+  };
+
+  //handle forget password
+  const handleReset = (e) => {
+    e.stopPropagation();
+    window.location.href = "/forgot-password";
+  };
+
   if (userData === undefined) {
     return;
   }
@@ -105,17 +120,23 @@ export default function Invoice() {
 
         <div
           className={`${
-            active ? "hidden" : "z-50 block"
-          } absolute  top-20  rounded-xl bg-white p-4 `}
+            active ? "z-50 block " : "hidden"
+          }   absolute  top-20 rounded-xl bg-white p-4`}
         >
-          <p className=" flex items-center space-x-2 text-[14px] hover:text-primary">
+          <button
+            onClick={(e) => logOut(e)}
+            className=" flex items-center space-x-2 text-[14px] hover:text-primary"
+          >
             <BiLogOut />
             <span>Log out</span>
-          </p>
-          <p className=" flex items-center space-x-2 text-[14px] hover:text-primary">
+          </button>
+          <button
+            onClick={(e) => handleReset(e)}
+            className=" flex items-center space-x-2 text-[14px] hover:text-primary"
+          >
             <BiReset />
-            <span>Reset Password</span>
-          </p>
+            <span>Forget Password</span>
+          </button>
         </div>
       </div>
 

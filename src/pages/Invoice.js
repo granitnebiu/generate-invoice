@@ -68,11 +68,24 @@ export default function Invoice() {
       });
   }, []);
 
+  // console.log(userData);
+  //if there is no token redirect to login
+  if (
+    localStorage.getItem("token") === undefined ||
+    localStorage.getItem("token") === "" ||
+    localStorage.getItem("token") === null
+  ) {
+    return (
+      <div className=" flex h-[500px] w-full items-center justify-center">
+        <div className="arc"></div>
+        <span className="hidden">{(window.location.href = "/sign-in")}</span>
+      </div>
+    );
+  }
+
   if (userData === undefined) {
     return;
   }
-
-  // console.log(userData);
 
   return (
     <>

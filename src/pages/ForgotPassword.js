@@ -4,7 +4,7 @@ import Button from "src/components/Button";
 import axios from "axios";
 import { toast } from "react-toastify";
 import LOGO from "../../src/images/logo-ximi.png";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineUser } from "react-icons/ai";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -57,11 +57,18 @@ export default function ForgotPassword() {
         />
 
         <Button btnName="Submit" btnType="submit" />
-        <p className="forgot-password flex select-none justify-end">
-          <a className="flex items-center gap-x-1  hover:text-primary" href="/sing-up">
-            <AiOutlineLogin /> Register User
-          </a>
-        </p>
+        <div className="mt-4 flex justify-between">
+          <p className="forgot-password select-none ">
+            <a className="flex items-center gap-x-1 hover:text-primary" href="/sign-in">
+              <AiOutlineUser /> Sign In
+            </a>
+          </p>
+          <p className="forgot-password select-none ">
+            <a className="flex items-center gap-x-1 hover:text-primary" href="/sing-up">
+              <AiOutlineLogin /> Register User
+            </a>
+          </p>
+        </div>
       </form>
     </div>
   );

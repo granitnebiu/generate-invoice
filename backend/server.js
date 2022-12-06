@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const port = 5000;
 app.use(express.json());
 //to show html and javascript in nodejs
-app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 
 //adding package Cross-Origin Resource Sharing
@@ -13,7 +12,10 @@ const cors = require("cors");
 app.use(cors());
 
 //using css
-app.use(express.static(__dirname + "/public"));
+const path = require("path");
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 
 //encrypting password
 const bcrypt = require("bcryptjs");
@@ -151,7 +153,7 @@ app.post("/forgot-password", async (req, res) => {
     const secret = JWT_SECRET + userExists.password;
     //create the token
     const token = jwt.sign({ email: userExists.email, id: userExists.id }, secret, {
-      expiresIn: "5m",
+      expiresIn: "59m",
     });
     const link = `http://localhost:5000/reset-password/${userExists.id}/${token}`;
     //send email from nodejs
@@ -181,7 +183,7 @@ app.post("/forgot-password", async (req, res) => {
 
     //send response to user
     if (userExists) {
-      return res.json({ status: "Reset Password Sended", info: "ok" });
+      return res.json({ status: "Reset password link send to email", info: "ok" });
     }
   } catch (error) {}
 });

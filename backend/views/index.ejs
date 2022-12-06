@@ -17,16 +17,42 @@
     </script>
   </head>
   <body>
-    <h1><%= email %></h1>
     <form action="" method="post">
-      <input type="password" name="password" placeholder="Password" id="password" />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        name="confirm-password"
-        id="confirm-password"
-      />
-      <button type="submit">Submit</button>
+      <div class="flex h-screen items-center justify-center">
+        <!-- Login Container -->
+
+        <div class="min-w-fit flex-col rounded-[4px] border bg-white px-6 py-14 shadow-md">
+          <div class="mb-5 mt-5 flex text-center text-sm text-gray-400">
+            <p>
+              <span>Your email is: <%= email %></span> <br />
+              <span>Change Password</span> <br />
+            </p>
+          </div>
+          <div class="mb-8 flex justify-center">
+            <img class="w-24" src="/images/logo-ximi.png" alt="" />
+          </div>
+          <div class="flex flex-col rounded-md text-sm">
+            <input
+              class="mb-5 rounded-[4px] border p-3 hover:border-red-500 hover:outline-none focus:outline-none"
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+            />
+            <input
+              class="rounded-[4px] border p-3 hover:border-red-500 hover:outline-none focus:outline-none"
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </div>
+          <button
+            class="hover:bg-black-400 mt-5 w-full scale-105 rounded-[4px] border bg-red-500 bg-gradient-to-r from-red-800 p-2 text-white duration-300"
+            type="submit"
+          >
+            Change Password
+          </button>
+        </div>
+      </div>
     </form>
   </body>
 </html>

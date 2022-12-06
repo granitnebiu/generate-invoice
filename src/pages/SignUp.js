@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 //validations forimport { useForm } from 'react-hook-form'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,11 +22,9 @@ const singUpValidation = Yup.object({
   // otp: Yup.number().required("OTP is required"),
   email: Yup.string().email().required("Email is required"),
   password: Yup.string()
-    .required("Password is mendatory")
+    .required("Password is mandatory")
     .min(7, "Password must be at 7 char long"),
-  confirmPassword: Yup.string()
-    .required("Password is mendatory")
-    .oneOf([Yup.ref("password")], "Passwords does not match"),
+  confirmPassword: Yup.string().required("Password is mandatory does not match"),
 });
 
 export default function SignUp() {
@@ -40,6 +38,8 @@ export default function SignUp() {
   const [verifyOtpButton, setVerifyOtpButton] = useState(false);
   const [otp, setOtp] = useState(false);
   const [showVerified, setShowVerified] = useState(false);
+
+  const formRef = useRef();
 
   const {
     register,
@@ -120,7 +120,6 @@ export default function SignUp() {
   };
 
   const submitForm = (data) => {
-    console.log("here");
     if (showVerified) {
       const addUser = {
         firstName: data.firstName,
@@ -141,6 +140,17 @@ export default function SignUp() {
         .then(function (response) {
           if (response.data.status === "OK") {
             toast.success("User has been registered");
+            formRef.current.reset();
+            reset({
+              fullName: "",
+              lastName: "",
+              mobile: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            });
+            setMobile("");
+            setShowVerified(false);
           } else {
             toast.error(response.data.error);
           }
@@ -153,7 +163,7 @@ export default function SignUp() {
         .catch(function (error) {
           toast.error(error);
         });
-      console.log(addUser);
+      // console.log(addUser);
     } else {
       toast.error("Please Verify Phone Number");
     }
@@ -164,7 +174,7 @@ export default function SignUp() {
       <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
       <h3 className="text-2xl font-bold text-primary">Register User</h3>
       {/* <form className="w-96" autoComplete="off" onSubmit={handleSubmit}> */}
-      <form className="w-96" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
+      <form ref={formRef} className="w-96" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
         <div id="recaptcha-container"></div>
         <Input
           type="text"

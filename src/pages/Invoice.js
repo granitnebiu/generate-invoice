@@ -50,6 +50,7 @@ export default function Invoice() {
   const userToken = {
     token: window.localStorage.getItem("token"),
   };
+
   useEffect(() => {
     axios
       .post("http://localhost:5000/userData", userToken, {

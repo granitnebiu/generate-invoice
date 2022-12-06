@@ -1,20 +1,36 @@
 import React, { useState } from "react";
+//validations forimport { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+//notifications
+import { toast } from "react-toastify";
+import axios from "axios";
+
 import Input from "src/components/Input";
 import Button from "src/components/Button";
-import axios from "axios";
-import { toast } from "react-toastify";
+
 import LOGO from "../../src/images/logo-ximi.png";
 import { AiOutlineLogin, AiOutlineUser } from "react-icons/ai";
 
+const forgetPasswordValidations = Yup.object({
+  email: Yup.string().email().required("Email is required"),
+});
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(forgetPasswordValidations),
+  });
 
+  const submitForgetPassword = (data) => {
     const userEmail = {
-      email: email,
+      email: data.email,
     };
     axios
       .post("http://localhost:5000/forgot-password", userEmail, {
@@ -40,20 +56,20 @@ export default function ForgotPassword() {
 
     // console.log(addUser);
   };
-
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center space-y-10">
       <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
       <h3 className="text-2xl font-bold text-primary">Forgot Password</h3>
-      <form className="w-96" autoComplete="off" onSubmit={handleSubmit}>
+      <form className="w-96" autoComplete="off" onSubmit={handleSubmit(submitForgetPassword)}>
         <Input
           type="email"
           name="email"
           id="email"
           value={email}
           label="Your Email"
-          required={true}
           onChange={(e) => setEmail(e.target.value)}
+          register={{ ...register("email") }}
+          error={errors.email}
         />
 
         <Button btnName="Submit" btnType="submit" />

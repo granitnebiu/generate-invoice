@@ -15,11 +15,11 @@ import firebase from "src/utils/firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 const auth = getAuth(firebase);
 
-const formSchema = Yup.object().shape({
+const singUpValidation = Yup.object({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Your last name is required"),
-  mobile: Yup.number().required("Phone number is required"),
-  otp: Yup.string().required("OTP is required"),
+  // mobiles: Yup.number().required("Phone number is required"),
+  // otp: Yup.number().required("OTP is required"),
   email: Yup.string().email().required("Email is required"),
   password: Yup.string()
     .required("Password is mendatory")
@@ -41,47 +41,14 @@ export default function SignUp() {
   const [otp, setOtp] = useState(false);
   const [showVerified, setShowVerified] = useState(false);
 
-  const formOptions = { resolver: yupResolver(formSchema) };
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
-  const { errors } = formState;
-  function onSubmit() {
-    if (showVerified) {
-      const addUser = {
-        firstName: firstName,
-        lastName: lastName,
-        mobile: mobile,
-        email: email,
-        password: password,
-      };
-
-      axios
-        .post("http://localhost:5000/register", addUser, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then(function (response) {
-          if (response.data.status === "OK") {
-            toast.success("User has been registered");
-          } else {
-            toast.error(response.data.error);
-          }
-          const interval = setInterval(() => {
-            // window.location.href = "./sign-in";
-          }, 2000);
-          return () => clearInterval(interval);
-          // console.log(response.data);
-        })
-        .catch(function (error) {
-          toast.error(error);
-        });
-    } else {
-      toast.error("Please Verify Phone Number");
-    }
-    // console.log(addUser);
-  }
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(singUpValidation),
+  });
 
   //Set up the reCAPTCHA verifier
   const onCaptchaVerify = () => {
@@ -152,14 +119,52 @@ export default function SignUp() {
       });
   };
 
-  // const handleSubmit = (e) => {};
+  const submitForm = (data) => {
+    console.log("here");
+    if (showVerified) {
+      const addUser = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        mobile: data.mobile,
+        email: data.email,
+        password: data.password,
+      };
+
+      axios
+        .post("http://localhost:5000/register", addUser, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then(function (response) {
+          if (response.data.status === "OK") {
+            toast.success("User has been registered");
+          } else {
+            toast.error(response.data.error);
+          }
+          const interval = setInterval(() => {
+            // window.location.href = "./sign-in";
+          }, 2000);
+          return () => clearInterval(interval);
+          // console.log(response.data);
+        })
+        .catch(function (error) {
+          toast.error(error);
+        });
+      console.log(addUser);
+    } else {
+      toast.error("Please Verify Phone Number");
+    }
+  };
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center space-y-8">
       <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
       <h3 className="text-2xl font-bold text-primary">Register User</h3>
       {/* <form className="w-96" autoComplete="off" onSubmit={handleSubmit}> */}
-      <form className="w-96" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-96" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
         <div id="recaptcha-container"></div>
         <Input
           type="text"
@@ -190,7 +195,7 @@ export default function SignUp() {
           value={mobile}
           onChange={(e) => ChangeMobile(e)}
           showHelperText={true}
-          // register={{ ...register("mobile") }}
+          // register={{ ...register("mobiles") }}
           // error={errors.mobile}
         />
 
@@ -217,8 +222,8 @@ export default function SignUp() {
               name="otp"
               id="otp"
               onChange={(e) => setOtp(e.target.value)}
-              register={{ ...register("otp") }}
-              error={errors.otp}
+              // register={{ ...register("otp") }}
+              // error={errors.otp}
             />
 
             <Button
@@ -261,6 +266,7 @@ export default function SignUp() {
           error={errors.confirmPassword}
         />
         <Button btnType="submit" btnName="Sign Up" />
+        {/* <input type="submit" value="Sign Up" /> */}
         <p className="forgot-password text-right">
           Already registered{" "}
           <a className="font-medium text-primary hover:text-gray-500" href="/sign-in">

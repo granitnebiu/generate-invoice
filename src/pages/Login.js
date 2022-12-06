@@ -1,20 +1,42 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+
+//validations forimport { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+
 import Input from "src/components/Input";
 import Button from "src/components/Button";
 import axios from "axios";
-import { toast } from "react-toastify";
+
 import LOGO from "../../src/images/logo-ximi.png";
 import { AiFillLock, AiOutlineLogin } from "react-icons/ai";
+
+const loginValidation = Yup.object({
+  email: Yup.string().email().required("Email is required"),
+  password: Yup.string().required("Password is mandatory"),
+});
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const formRef = useRef();
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginValidation),
+  });
+
+  const submitLoginForm = (data) => {
     const LoginUser = {
-      email: email,
-      password: password,
+      email: data.email,
+      password: data.password,
     };
 
     axios
@@ -35,6 +57,8 @@ export default function Login() {
           }, 2000);
           return () => clearInterval(interval);
         }
+        formRef.current.reset();
+        // reset({ email: "", password: "" });
         // console.log(response.data.error);
         toast.error(response.data.error);
       })
@@ -49,7 +73,12 @@ export default function Login() {
     <div className="flex h-screen w-screen flex-col items-center justify-center space-y-10">
       <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
       <h3 className="text-2xl font-bold text-primary">Sign In</h3>
-      <form className="w-96" autoComplete="off" onSubmit={handleSubmit}>
+      <form
+        ref={formRef}
+        className="w-96"
+        autoComplete="off"
+        onSubmit={handleSubmit(submitLoginForm)}
+      >
         <Input
           type="email"
           name="email"
@@ -58,6 +87,8 @@ export default function Login() {
           label="Your Email"
           required={true}
           onChange={(e) => setEmail(e.target.value)}
+          register={{ ...register("email") }}
+          error={errors.email}
         />
 
         <Input
@@ -68,6 +99,8 @@ export default function Login() {
           label="Your Password"
           required={true}
           onChange={(e) => setPassword(e.target.value)}
+          register={{ ...register("password") }}
+          error={errors.password}
         />
 
         <Button btnName="Submit" btnType="submit" />

@@ -40,13 +40,7 @@ export default function Login() {
     };
 
     axios
-      .post("/login-user", LoginUser, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+      .post("/login-user", LoginUser)
       .then(function (response) {
         console.log(response);
         if (response.data.status === "ok") {

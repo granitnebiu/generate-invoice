@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 import Input from "src/components/Input";
 import Button from "src/components/Button";
-import axios from "axios";
+import axios from "src/utils/axios";
 import LOGO from "../../src/images/logo-ximi.png";
 
 //sing up via phone number
@@ -130,13 +130,7 @@ export default function SignUp() {
       };
 
       axios
-        .post("http://localhost:5000/register", addUser, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
+        .post("/register", addUser)
         .then(function (response) {
           if (response.data.status === "OK") {
             toast.success("User has been registered");

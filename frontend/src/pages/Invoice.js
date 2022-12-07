@@ -12,7 +12,7 @@ import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
 import { BiLogOut, BiReset } from "react-icons/bi";
 
-import axios from "axios";
+import axios from "src/utils/axios";
 
 export default function Invoice() {
   const [showInvoice, setShowInvoice] = useState(false);
@@ -53,14 +53,7 @@ export default function Invoice() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/userData", userToken, {
-        crossDomain: true,
-        headers: {
-          Accept: "application/json",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+      .post("/userData", userToken)
       .then(function (response) {
         setUserData(response.data.data);
       })

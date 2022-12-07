@@ -5,6 +5,7 @@ var url = config.url.API_URL;
 
 const request = axios.create({
   baseURL: url,
+  crossDomain: true,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

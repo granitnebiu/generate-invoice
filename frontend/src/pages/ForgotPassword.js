@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 //notifications
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios from "src/utils/axios";
 
 import Input from "src/components/Input";
 import Button from "src/components/Button";
@@ -33,13 +33,7 @@ export default function ForgotPassword() {
       email: data.email,
     };
     axios
-      .post("http://localhost:5000/forgot-password", userEmail, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+      .post("/forgot-password", userEmail)
       .then(function (response) {
         console.log(response);
         if (response.data.info === "ok") {

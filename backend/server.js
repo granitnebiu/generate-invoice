@@ -70,6 +70,18 @@ require("./userDetails");
 //creating new user Importing user model
 const User = mongoose.model("UserInfo");
 //api for registering a user
+
+//basic api to get user informations
+app.get("/users", async (req, res) => {
+  User.find({}, function (err, usersLists) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(usersLists);
+    }
+  });
+});
+
 app.post("/register", async (req, res) => {
   const { firstName, lastName, mobile, email, password, confirmPassword } = req.body;
   //encrypt password

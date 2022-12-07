@@ -11,6 +11,11 @@ app.use(express.urlencoded({ extended: false }));
 const cors = require("cors");
 app.use(cors());
 
+//npm module used to process data sent in an HTTP request body
+const bodyParser = require("body-parser");
+//express-validator
+const { check, validationResult } = require("express-validator");
+
 //using css
 const path = require("path");
 app.set("views", path.join(__dirname, "views"));
@@ -211,34 +216,62 @@ app.get("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
-app.post("/reset-password/:id/:token", async (req, res) => {
-  const { id, token } = req.params;
-  const { password } = req.body;
-  const userExists = await User.findOne({ _id: id });
-  if (!userExists) {
-    return res.json({ status: "User does not exists" });
-  }
-  //we need the secret to verify if the secret belong to us or not
-  const secret = JWT_SECRET + userExists.password;
-  //checking if the user is the same within our database
-  try {
-    //using the function of jwt to verify
-    const verify = jwt.verify(token, secret);
-    const encryptedPassword = await bcrypt.hash(password, 10);
-    await User.updateOne(
-      {
-        _id: id,
-      },
-      {
-        $set: {
-          password: encryptedPassword,
-        },
-      }
-    );
+app.post(
+  "/reset-password/:id/:token",
+  [
+    check("password")
+      .exists({ checkFalsy: true })
 
-    res.render("index", { email: verify.email, status: "password updated" });
-    // res.json({ status: "password updated" });
-  } catch (error) {
-    res.json({ status: "Something when wrong" });
+      .withMessage("You must type a password")
+      .isLength({ min: 7 })
+      .withMessage("The password need to be more then 7 character"),
+    check("confirmedPassword")
+      .exists({ checkFalsy: true })
+
+      .withMessage("You must type a confirmation password")
+      .custom((value, { req }) => value === req.body.password)
+      .withMessage("The passwords do not match"),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    const { id, token } = req.params;
+    const { password } = req.body;
+    const userExists = await User.findOne({ _id: id });
+    if (!userExists) {
+      return res.json({ status: "User does not exists" });
+    }
+    //we need the secret to verify if the secret belong to us or not
+    const secret = JWT_SECRET + userExists.password;
+    //checking if the user is the same within our database
+    try {
+      // if (errors.isEmpty()) {
+
+      if (!errors.isEmpty()) {
+        //using the function of jwt to verify email
+        const verify = jwt.verify(token, secret);
+        const alert = errors.array();
+        res.render("index", { alert, email: verify.email, status: "failed" });
+      } else {
+        const verify = jwt.verify(token, secret);
+        const encryptedPassword = await bcrypt.hash(password, 10);
+        await User.updateOne(
+          {
+            _id: id,
+          },
+          {
+            $set: {
+              password: encryptedPassword,
+              confirmPassword: encryptedPassword,
+            },
+          }
+        );
+
+        res.render("index", { email: verify.email, status: "password updated" });
+      }
+      // res.json({ status: "password updated" });
+    } catch (error) {
+      res.json({ status: "Something when wrong" });
+    }
   }
-});
+);

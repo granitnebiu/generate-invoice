@@ -6,28 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
-    <script>
-      var status = `<%- JSON.stringify(status) %>`;
-      //   console.log(status);
-      if (JSON.parse(status) === "password updated") {
-        if (confirm("Password changed! Do you want to login?")) {
-          window.location.href = "http://localhost:3000/";
-        }
-      }
-    </script>
   </head>
   <body>
     <form action="" method="post">
       <div class="flex h-screen items-center justify-center">
         <!-- Login Container -->
-
         <div class="min-w-fit flex-col rounded-[4px] border bg-white px-6 py-14 shadow-md">
-          <div class="mb-5 mt-5 flex text-center text-sm text-gray-400">
-            <p>
-              <span>Your email is: <%= email %></span> <br />
+          <div class="mb-5 mt-5 flex w-full text-center text-sm text-gray-400">
+            <p class="w-full">
+              <span>Your email is:</span>
+              <span class="font-bold"> <%= email %></span> <br />
               <span>Change Password</span> <br />
             </p>
           </div>
+
           <div class="mb-8 flex justify-center">
             <img class="w-24" src="/images/logo-ximi.png" alt="" />
           </div>
@@ -42,6 +34,8 @@
             <input
               class="rounded-[4px] border p-3 hover:border-red-500 hover:outline-none focus:outline-none"
               type="password"
+              name="confirmedPassword"
+              id="confirmedPassword"
               placeholder="Confirm Password"
             />
           </div>
@@ -51,8 +45,40 @@
           >
             Change Password
           </button>
+
+          <% if(typeof alert != 'undefined') { %> <% alert.forEach(function(error) { %>
+          <div class="mt-2 rounded-xl bg-red-300 px-4 py-2 font-bold text-white">
+            <%= error.msg %>
+          </div>
+          <% }) %> <% } %>
+
+          <div class="mt-4 flex items-center justify-center">
+            <div id="setstatus" class="active"></div>
+            <div id="buttonadd"></div>
+          </div>
         </div>
       </div>
     </form>
   </body>
+
+  <script>
+    var status = `<%- JSON.stringify(status) %>`;
+    if (JSON.parse(status) === "password updated") {
+      const statusMessage = document.getElementById("setstatus");
+      statusMessage.innerHTML = "Password changed! Do you want to";
+      const addClasses = document.querySelector("div.active");
+      addClasses.classList.add("text-black");
+      // console.log(addClasses.className);
+
+      const buttonCreate = document.getElementById("buttonadd");
+      let btn = document.createElement("button");
+      btn.innerHTML = "Sign In";
+      btn.type = "button";
+      btn.classList.add("pl-2", "font-bold", "text-green-700", "hover:text-red-700");
+      btn.addEventListener("click", function () {
+        window.location.href = "http://localhost:3000/";
+      });
+      buttonCreate.appendChild(btn);
+    }
+  </script>
 </html>

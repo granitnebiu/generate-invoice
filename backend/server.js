@@ -32,6 +32,7 @@ var nodemailer = require("nodemailer");
 
 const JWT_SECRET = "hjskdfhsdj12789gggggyytyte3s7892334sadwq3234r43gf././/.23324/fdgfdg878";
 //connect to MongoDB
+mongoose.set("strictQuery", false);
 const mongoUrl =
   "mongodb+srv://granit:Granit123@cluster0.a4ej3ei.mongodb.net/?retryWrites=true&w=majority";
 

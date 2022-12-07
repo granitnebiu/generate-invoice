@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "serve": "nodemon server.js",
     "tailwind:css": "postcss public/css/tailwind.css -o public/css/style.css"
   },

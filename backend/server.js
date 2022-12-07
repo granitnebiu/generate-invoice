@@ -41,7 +41,7 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    console.log("connected to database");
+    // console.log("connected to database");
   })
   .catch((e) => console.log(e));
 
@@ -99,7 +99,7 @@ app.post("/login-user", async (req, res) => {
   const { email, password } = req.body;
   //check if the user exists or not
   const user = await User.findOne({ email });
-  console.log(user);
+  // console.log(user);
   if (!user) {
     return res.json({ error: "User not found" });
   }
@@ -139,7 +139,7 @@ app.post("/userData", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running son ${port}`);
+  // console.log(`Server is running son ${port}`);
 });
 
 //creating api forget password
@@ -185,7 +185,7 @@ app.post("/forgot-password", async (req, res) => {
         console.log("Email sent: " + info.response);
       }
     });
-    console.log(link);
+    // console.log(link);
 
     //send response to user
     if (userExists) {
@@ -196,7 +196,7 @@ app.post("/forgot-password", async (req, res) => {
 
 app.get("/reset-password/:id/:token", async (req, res) => {
   const { id, token } = req.params;
-  console.log(req.params);
+  // console.log(req.params);
   const userExists = await User.findOne({ _id: id });
   if (!userExists) {
     return res.json({ status: "User does not exists" });

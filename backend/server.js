@@ -1,7 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const port = 5000;
+// const port = 5000;
 app.use(express.json());
 //to show html and javascript in nodejs
 app.use(express.urlencoded({ extended: false }));
@@ -30,13 +31,12 @@ const jwt = require("jsonwebtoken");
 //send email from nodejs
 var nodemailer = require("nodemailer");
 
-const JWT_SECRET = "hjskdfhsdj12789gggggyytyte3s7892334sadwq3234r43gf././/.23324/fdgfdg878";
+const JWT_SECRET = process.env.ENCRYP_TOKEN;
 
 //required by mongodb 7 and https://render.com/
 mongoose.set("strictQuery", true);
 //connect to MongoDB
-const mongoUrl =
-  "mongodb+srv://granit:Granit123@cluster0.a4ej3ei.mongodb.net/invoiceDb?retryWrites=true&w=majority";
+const mongoUrl = process.env.MONGODB_CONNECTION;
 
 //connected to MongoDB
 mongoose
@@ -153,8 +153,8 @@ app.post("/userData", async (req, res) => {
   } catch (error) {}
 });
 
-app.listen(port, () => {
-  // console.log(`Server is running son ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on ${process.env.PORT}`);
 });
 
 //creating api forget password
@@ -176,7 +176,9 @@ app.post("/forgot-password", async (req, res) => {
     const token = jwt.sign({ email: userExists.email, id: userExists.id }, secret, {
       expiresIn: "59m",
     });
-    const link = `http://localhost:5000/reset-password/${userExists.id}/${token}`;
+    const link = `${process.env.LOCAL || process.env.PRODUCTION}/reset-password/${
+      userExists.id
+    }/${token}`;
     //send email from nodejs
     var transporter = nodemailer.createTransport({
       service: "gmail",

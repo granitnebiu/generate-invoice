@@ -164,120 +164,127 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-8">
-      <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
-      <h3 className="text-2xl font-bold text-primary">Register User</h3>
-      {/* <form className="w-96" autoComplete="off" onSubmit={handleSubmit}> */}
-      <form ref={formRef} className="w-96" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
-        <div id="recaptcha-container"></div>
-        <Input
-          type="text"
-          name="firstName"
-          id="firstName"
-          value={firstName}
-          label="Your First Name"
-          onChange={(e) => setFirstName(e.target.value)}
-          register={{ ...register("firstName") }}
-          error={errors.firstName}
-        />
-        <Input
-          type="text"
-          name="lastName"
-          id="lastName"
-          value={lastName}
-          label="Your Last Name"
-          onChange={(e) => setLastName(e.target.value)}
-          register={{ ...register("lastName") }}
-          error={errors.lastName}
-        />
-        {/* Phone Number */}
-        <Input
-          type="number"
-          name="mobile"
-          id="mobile"
-          label="Your Phone Number"
-          value={mobile}
-          onChange={(e) => ChangeMobile(e)}
-          showHelperText={true}
-          // register={{ ...register("mobiles") }}
-          // error={errors.mobile}
-        />
-
-        {verifyButton === true && (
-          <Button
-            extraClass={`${
-              showVerified
-                ? "!bg-green-500 cursor-no-drop hover:!bg-green-300 !border-transparent"
-                : ""
-            } w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
-            onClick={() => onSendOTP()}
-            btnType="button"
-            disabled={showVerified ? true : false}
-            btnName={`${showVerified ? "Verified" : "Send OTP"}`}
+    <div className="flex h-screen w-screen items-center justify-center">
+      <div className="flex w-[85%] flex-col items-center justify-center space-y-10 rounded-xl bg-white p-16 shadow-xl md:w-auto ">
+        <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
+        <h3 className="text-2xl font-bold text-primary">Register User</h3>
+        {/* <form className="w-96" autoComplete="off" onSubmit={handleSubmit}> */}
+        <form
+          ref={formRef}
+          className="w-64 md:w-96"
+          autoComplete="off"
+          onSubmit={handleSubmit(submitForm)}
+        >
+          <div id="recaptcha-container"></div>
+          <Input
+            type="text"
+            name="firstName"
+            id="firstName"
+            value={firstName}
+            label="Your First Name"
+            onChange={(e) => setFirstName(e.target.value)}
+            register={{ ...register("firstName") }}
+            error={errors.firstName}
           />
-        )}
-        {/* END OF PHONE NUMBER  */}
-        {/* OTP  */}
-        {verifyOtpButton === true && (
-          <>
-            <Input
-              type="number"
-              label="Your OTP"
-              name="otp"
-              id="otp"
-              onChange={(e) => setOtp(e.target.value)}
-              // register={{ ...register("otp") }}
-              // error={errors.otp}
-            />
+          <Input
+            type="text"
+            name="lastName"
+            id="lastName"
+            value={lastName}
+            label="Your Last Name"
+            onChange={(e) => setLastName(e.target.value)}
+            register={{ ...register("lastName") }}
+            error={errors.lastName}
+          />
+          {/* Phone Number */}
+          <Input
+            type="number"
+            name="mobile"
+            id="mobile"
+            label="Your Phone Number"
+            value={mobile}
+            onChange={(e) => ChangeMobile(e)}
+            showHelperText={true}
+            // register={{ ...register("mobiles") }}
+            // error={errors.mobile}
+          />
 
+          {verifyButton === true && (
             <Button
-              extraClass={`w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
-              onClick={() => VerifyCode()}
+              extraClass={`${
+                showVerified
+                  ? "!bg-green-500 cursor-no-drop hover:!bg-green-300 !border-transparent"
+                  : ""
+              } w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
+              onClick={() => onSendOTP()}
               btnType="button"
-              btnName="Verify OTP"
+              disabled={showVerified ? true : false}
+              btnName={`${showVerified ? "Verified" : "Send OTP"}`}
             />
-          </>
-        )}
-        {/* END OF OTP  */}
-        <Input
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          label="Your Email"
-          onChange={(e) => setEmail(e.target.value)}
-          register={{ ...register("email") }}
-          error={errors.email}
-        />
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          label="Your Password"
-          onChange={(e) => setPassword(e.target.value)}
-          register={{ ...register("password") }}
-          error={errors.password}
-        />
-        <Input
-          type="password"
-          name="confirmPassword"
-          id="confirmPassword"
-          value={confirmPassword}
-          label="Confirm Password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          register={{ ...register("confirmPassword") }}
-          error={errors.confirmPassword}
-        />
-        <Button btnType="submit" btnName="Sign Up" />
-        {/* <input type="submit" value="Sign Up" /> */}
-        <p className="forgot-password text-right">
-          Already registered{" "}
-          <a className="font-medium text-primary hover:text-gray-500" href="/sign-in">
-            sign in?
-          </a>
-        </p>
-      </form>
+          )}
+          {/* END OF PHONE NUMBER  */}
+          {/* OTP  */}
+          {verifyOtpButton === true && (
+            <>
+              <Input
+                type="number"
+                label="Your OTP"
+                name="otp"
+                id="otp"
+                onChange={(e) => setOtp(e.target.value)}
+                // register={{ ...register("otp") }}
+                // error={errors.otp}
+              />
+
+              <Button
+                extraClass={`w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
+                onClick={() => VerifyCode()}
+                btnType="button"
+                btnName="Verify OTP"
+              />
+            </>
+          )}
+          {/* END OF OTP  */}
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            label="Your Email"
+            onChange={(e) => setEmail(e.target.value)}
+            register={{ ...register("email") }}
+            error={errors.email}
+          />
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            label="Your Password"
+            onChange={(e) => setPassword(e.target.value)}
+            register={{ ...register("password") }}
+            error={errors.password}
+          />
+          <Input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            value={confirmPassword}
+            label="Confirm Password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            register={{ ...register("confirmPassword") }}
+            error={errors.confirmPassword}
+          />
+          <Button btnType="submit" btnName="Sign Up" />
+          {/* <input type="submit" value="Sign Up" /> */}
+          <p className="forgot-password mt-8 text-right md:mt-0">
+            Already registered{" "}
+            <a className="font-medium text-primary hover:text-gray-500" href="/sign-in">
+              sign in?
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }

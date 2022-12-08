@@ -64,53 +64,55 @@ export default function Login() {
   };
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-10">
-      <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
-      <h3 className="text-2xl font-bold text-primary">Sign In</h3>
-      <form
-        ref={formRef}
-        className="w-96"
-        autoComplete="off"
-        onSubmit={handleSubmit(submitLoginForm)}
-      >
-        <Input
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          label="Your Email"
-          required={true}
-          onChange={(e) => setEmail(e.target.value)}
-          register={{ ...register("email") }}
-          error={errors.email}
-        />
+    <div className="flex h-screen w-screen  items-center justify-center">
+      <div className="flex w-[85%] flex-col items-center justify-center space-y-10 rounded-xl bg-white p-16 shadow-xl md:w-auto ">
+        <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
+        <h3 className="text-2xl font-bold text-primary">Sign In</h3>
+        <form
+          ref={formRef}
+          className="w-64 md:w-96"
+          autoComplete="off"
+          onSubmit={handleSubmit(submitLoginForm)}
+        >
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            label="Your Email"
+            required={true}
+            onChange={(e) => setEmail(e.target.value)}
+            register={{ ...register("email") }}
+            error={errors.email}
+          />
 
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          label="Your Password"
-          required={true}
-          onChange={(e) => setPassword(e.target.value)}
-          register={{ ...register("password") }}
-          error={errors.password}
-        />
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            label="Your Password"
+            required={true}
+            onChange={(e) => setPassword(e.target.value)}
+            register={{ ...register("password") }}
+            error={errors.password}
+          />
 
-        <Button btnName="Submit" btnType="submit" />
-        <div className="mt-4 flex justify-between">
-          <p className="forgot-password select-none ">
-            <a className="flex items-center gap-x-1 hover:text-primary" href="/forgot-password">
-              <AiFillLock /> Forgot Password
-            </a>
-          </p>
-          <p className="forgot-password select-none ">
-            <a className="flex items-center gap-x-1 hover:text-primary" href="/sing-up">
-              <AiOutlineLogin /> Register User
-            </a>
-          </p>
-        </div>
-      </form>
+          <Button btnName="Submit" btnType="submit" />
+          <div className="mt-4 flex flex-col justify-between gap-y-2 md:flex-row md:gap-y-0">
+            <p className="forgot-password select-none ">
+              <a className="flex items-center gap-x-1 hover:text-primary" href="/forgot-password">
+                <AiFillLock /> Forgot Password
+              </a>
+            </p>
+            <p className="forgot-password select-none ">
+              <a className="flex items-center gap-x-1 hover:text-primary" href="/sing-up">
+                <AiOutlineLogin /> Register User
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

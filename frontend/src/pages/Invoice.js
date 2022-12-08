@@ -100,7 +100,7 @@ export default function Invoice() {
     <>
       <div
         onClick={() => setActive(!active)}
-        className=" relative flex w-full select-none items-center justify-end space-x-2 px-8 pt-8"
+        className="relative flex w-full select-none items-center justify-end space-x-2 px-8 pt-8"
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
           <p className="font-bold uppercase text-white">{userData.firstName.charAt(0)}</p>
@@ -155,39 +155,41 @@ export default function Invoice() {
               </button>
             </div>
             <PDFExport ref={pdfExportComponent} pageSize="A4">
-              <div
-                className="paper-bg m-[30mm 45mm 30mm 45mm] h-[29.7cm] w-[21cm] p-5"
-                ref={componentRef}
-              >
-                <Header />
-                <MainDetails
-                  name={name}
-                  address={address}
-                  email={email}
-                  postalCode={postalCode}
-                  phone={phone}
-                />
-                <ClientDetails clientName={clientName} clientAddress={clientAddress} />
-                <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
-                <Table
-                  description={description}
-                  amount={amount}
-                  price={price}
-                  quantity={quantity}
-                  list={list}
-                  total={total}
-                  setTotal={setTotal}
-                />
-                <Notes notes={notes} />
-                <Footer
-                  name={name}
-                  address={address}
-                  email={email}
-                  website={website}
-                  phone={phone}
-                  bankName={bankName}
-                  bankAccount={bankAccount}
-                />
+              <div className="w-full overflow-x-auto ">
+                <div
+                  className="paper-bg m-[30mm 45mm 30mm 45mm] mx-auto mt-4 h-[29.7cm] w-[21cm] border-2 bg-white p-5 shadow-xl"
+                  ref={componentRef}
+                >
+                  <Header />
+                  <MainDetails
+                    name={name}
+                    address={address}
+                    email={email}
+                    postalCode={postalCode}
+                    phone={phone}
+                  />
+                  <ClientDetails clientName={clientName} clientAddress={clientAddress} />
+                  <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
+                  <Table
+                    description={description}
+                    amount={amount}
+                    price={price}
+                    quantity={quantity}
+                    list={list}
+                    total={total}
+                    setTotal={setTotal}
+                  />
+                  <Notes notes={notes} />
+                  <Footer
+                    name={name}
+                    address={address}
+                    email={email}
+                    website={website}
+                    phone={phone}
+                    bankName={bankName}
+                    bankAccount={bankAccount}
+                  />
+                </div>
               </div>
             </PDFExport>
             <button

@@ -208,7 +208,11 @@ app.post("/forgot-password", async (req, res) => {
 
     //send response to user
     if (userExists) {
-      return res.json({ status: "Reset password link send to email", info: "ok" });
+      return res.json({
+        status: "Reset password link send to email",
+        info: "ok",
+        redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
+      });
     }
   } catch (error) {}
 });
@@ -229,6 +233,7 @@ app.get("/reset-password/:id/:token", async (req, res) => {
     res.render("index", {
       email: verify.email,
       status: "Password was not changed, something went wrong",
+      redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
     });
   } catch (error) {
     res.sendStatus(404);
@@ -270,7 +275,12 @@ app.post(
         //using the function of jwt to verify email
         const verify = jwt.verify(token, secret);
         const alert = errors.array();
-        res.render("index", { alert, email: verify.email, status: "failed" });
+        res.render("index", {
+          alert,
+          email: verify.email,
+          status: "failed",
+          redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
+        });
       } else {
         const verify = jwt.verify(token, secret);
         const encryptedPassword = await bcrypt.hash(password, 10);
@@ -286,7 +296,11 @@ app.post(
           }
         );
 
-        res.render("index", { email: verify.email, status: "password updated" });
+        res.render("index", {
+          email: verify.email,
+          status: "password updated",
+          redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
+        });
       }
       // res.json({ status: "password updated" });
     } catch (error) {

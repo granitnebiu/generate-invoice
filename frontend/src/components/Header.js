@@ -16,7 +16,9 @@ export default function Header({
     <>
       <header className="mb-5 flex flex-col items-center justify-center  xl:flex-row xl:justify-between  ">
         <div className="flex w-full justify-between">
-          <img src={LOGO} alt="logo auto ximi" className=" h-auto w-40" />
+          <div className="w-1/2">
+            <img src={LOGO} alt="logo auto ximi" className="mt-2 h-auto w-48" />
+          </div>
           <div className="w-1/2 text-right">
             <p className="text-[16px] font-bold">{name}</p>
             <p className="text-[14px]">

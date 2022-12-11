@@ -7,15 +7,15 @@ export default function Table({ tax, list, total, setTotal }) {
       <table className="my-5 mb-10 w-full">
         <thead>
           <tr className="bg-gray-100 font-bold">
-            <td>Šifra artikla</td>
-            <td>Naziv artikla</td>
-            <td>Količina</td>
-            <td>JM</td>
-            <td>Cena</td>
-            <td>Rabat</td>
-            <td>Cena sa rabatom</td>
-            <td>PDV(%)</td>
-            <td>Iznos bez PDV-a</td>
+            <td className="border-r-2 border-b-gray-200">Šifra artikla</td>
+            <td className="border-r-2 border-b-gray-200">Naziv artikla</td>
+            <td className="border-r-2 border-b-gray-200">Količina</td>
+            <td className="border-r-2 border-b-gray-200">JM</td>
+            <td className="border-r-2 border-b-gray-200">Cena</td>
+            <td className="border-r-2 border-b-gray-200">Rabat</td>
+            <td className="border-r-2 border-b-gray-200">Cena sa rabatom</td>
+            <td className="border-r-2 border-b-gray-200">PDV(%)</td>
+            <td className="border-r-2 border-b-gray-200">Iznos bez PDV-a</td>
           </tr>
         </thead>
         {list !== "" &&
@@ -34,16 +34,16 @@ export default function Table({ tax, list, total, setTotal }) {
             }) => (
               <React.Fragment key={id}>
                 <thead className="">
-                  <tr className="border-2 border-b-gray-200">
-                    <td>{articleNumber}</td>
-                    <td>{description}</td>
-                    <td>{quantity}</td>
-                    <td>{jm}</td>
-                    <td>{price}</td>
-                    <td>{rabat}</td>
-                    <td>{priceSale}</td>
-                    <td>{tax}</td>
-                    <td>{priceSale}</td>
+                  <tr className="border-2 border-b-gray-200 text-center">
+                    <td className="border-r-2 border-b-gray-200">{articleNumber}</td>
+                    <td className="border-r-2 border-b-gray-200">{description}</td>
+                    <td className="border-r-2 border-b-gray-200">{quantity}</td>
+                    <td className="border-r-2 border-b-gray-200">{jm}</td>
+                    <td className="border-r-2 border-b-gray-200">{price}</td>
+                    <td className="border-r-2 border-b-gray-200">{rabat}</td>
+                    <td className="border-r-2 border-b-gray-200">{priceSale}</td>
+                    <td className="border-r-2 border-b-gray-200">{tax}</td>
+                    <td className="border-r-2 border-b-gray-200">{priceSale}</td>
                   </tr>
                 </thead>
               </React.Fragment>

@@ -282,16 +282,16 @@ export default function TableFrom({
       {/* table items  */}
       <table className="mt-5 mb-10 w-full">
         <thead>
-          <tr className="bg-gray-100 font-bold">
-            <td>Šifra artikla</td>
-            <td>Naziv artikla</td>
-            <td>Količina</td>
-            <td>JM</td>
-            <td>Cena</td>
-            <td>Rabat</td>
-            <td>Cena sa rabatom</td>
-            <td>PDV(%)</td>
-            <td>Iznos bez PDV-a</td>
+          <tr className="border-b-2 border-b-gray-200 bg-gray-100 font-bold">
+            <td className="border-r-2 border-b-gray-200">Šifra artikla</td>
+            <td className="border-r-2 border-b-gray-200">Naziv artikla</td>
+            <td className="border-r-2 border-b-gray-200">Količina</td>
+            <td className="border-r-2 border-b-gray-200">JM</td>
+            <td className="border-r-2 border-b-gray-200">Cena</td>
+            <td className="border-r-2 border-b-gray-200">Rabat</td>
+            <td className="border-r-2 border-b-gray-200">Cena sa rabatom</td>
+            <td className="border-r-2 border-b-gray-200">PDV(%)</td>
+            <td className="border-r-2 border-b-gray-200">Iznos bez PDV-a</td>
           </tr>
         </thead>
         {list !== "" &&
@@ -299,17 +299,17 @@ export default function TableFrom({
             ({ id, articleNumber, description, quantity, jm, price, rabat, priceSale, amount }) => (
               <React.Fragment key={id}>
                 <tbody className="">
-                  <tr>
-                    <td>{articleNumber}</td>
-                    <td>{description}</td>
-                    <td>{quantity}</td>
-                    <td>{jm}</td>
-                    <td>{price}</td>
-                    <td>{rabat}</td>
-                    <td>{priceSale}</td>
-                    <td>{tax}</td>
-                    <td className="amount">{priceSale}</td>
-                    <td>
+                  <tr className="border-b-2 border-b-gray-200">
+                    <td className="border-r-2 border-b-gray-200">{articleNumber}</td>
+                    <td className="border-r-2 border-b-gray-200">{description}</td>
+                    <td className="border-r-2 border-b-gray-200">{quantity}</td>
+                    <td className="border-r-2 border-b-gray-200">{jm}</td>
+                    <td className="border-r-2 border-b-gray-200">{price}</td>
+                    <td className="border-r-2 border-b-gray-200">{rabat}</td>
+                    <td className="border-r-2 border-b-gray-200">{priceSale}</td>
+                    <td className="border-r-2 border-b-gray-200">{tax}</td>
+                    <td className="amount border-r-2 border-b-gray-200">{priceSale}</td>
+                    <td className="">
                       <button onClick={() => deleteTableRow(id)}>
                         <BsTrash className="text-red-700" />
                       </button>

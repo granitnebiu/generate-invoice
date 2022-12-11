@@ -15,7 +15,7 @@ export default function Table({ tax, list, total, setTotal }) {
             <td>Rabat</td>
             <td>Cena sa rabatom</td>
             <td>PDV(%)</td>
-            <td>Iznos sa PDV-a</td>
+            <td>Iznos bez PDV-a</td>
           </tr>
         </thead>
         {list !== "" &&

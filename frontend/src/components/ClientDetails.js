@@ -18,7 +18,7 @@ export default function ClientDetails({
         <p className="mt-4">{clientAddress}</p>
         {clientPlate !== "" && (
           <p>
-            Tablica automobila: <span className="font-bold">{clientPlate}</span>
+            Reg Oznaka: <span className="font-bold">{clientPlate}</span>
           </p>
         )}
       </section>

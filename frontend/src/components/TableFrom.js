@@ -47,10 +47,7 @@ export default function TableFrom({
         quantity,
         jm,
         price,
-        rabat,
-        priceSale,
         amount,
-        tax,
       };
       setDescription("");
       setQuantity(1);
@@ -66,10 +63,6 @@ export default function TableFrom({
     setAmount(quantity * price);
   }, [quantity, price, setAmount, setArticleNumber, articleNumber]);
 
-  useEffect(() => {
-    setPriceSale((quantity * price * (1 - rabat / 100)).toFixed(2));
-  }, [price, rabat, quantity, setPriceSale]);
-
   //calculate total amount of items in table
   useEffect(() => {
     let rows = document.querySelectorAll(".amount");
@@ -77,7 +70,7 @@ export default function TableFrom({
 
     for (let i = 0; i < rows.length; i++) {
       if (rows[i].className === "amount") {
-        sum += isNaN(rows[i].innerHTML) ? 0 : parseInt(rows[i].innerHTML);
+        sum += isNaN(rows[i].innerHTML) ? 0 : parseFloat(rows[i].innerHTML);
         setTotal(sum);
       }
     }
@@ -99,10 +92,12 @@ export default function TableFrom({
     setJm(editingRow.jm);
     setQuantity(editingRow.quantity);
     setPrice(editingRow.price);
-    setRabat(editingRow.rabat);
-    setTax(editingRow.tax);
   };
-
+  const number = total;
+  const formattedTotal = number.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
   return (
     <>
       <form className="" onSubmit={handleSubmit}>
@@ -199,74 +194,23 @@ export default function TableFrom({
               htmlFor="prise"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Cena
+              Cena po komadu
             </label>
           </div>
-          <div className="group relative z-0  w-full">
-            <input
-              type="number"
-              name="rabat"
-              id="rabat"
-              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
-              placeholder=" "
-              autoComplete="off"
-              value={rabat}
-              onChange={(e) => setRabat(e.target.value)}
-            />
-            <label
-              htmlFor="rabat"
-              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
-            >
-              Rabat
-            </label>
-          </div>
+
           {/* amount */}
           <div className="group relative z-0 w-full">
             <p
               id="cena_sa_rabatom"
               className="disabled peer block w-full select-none appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
             >
-              {priceSale}
+              {amount}
             </p>
             <label
               htmlFor="cena_sa_rabatom"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Cena sa rabatom
-            </label>
-          </div>
-          <div className="group relative z-0  w-full">
-            <input
-              type="number"
-              name="tax"
-              id="tax"
-              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
-              placeholder=" "
-              autoComplete="off"
-              value={tax}
-              onChange={(e) => setTax(e.target.value)}
-              disabled
-            />
-            <label
-              htmlFor="tax"
-              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
-            >
-              PDV(%)
-            </label>
-          </div>
-          {/* amount */}
-          <div className="group relative z-0 w-full">
-            <p
-              id="amount"
-              className="disabled peer block w-full select-none appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
-            >
-              {priceSale}
-            </p>
-            <label
-              htmlFor="prise"
-              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
-            >
-              Iznos bez PDV-a
+              Ukupno
             </label>
           </div>
         </div>
@@ -287,11 +231,8 @@ export default function TableFrom({
             <td className="border-r-2 border-b-gray-200">Naziv artikla</td>
             <td className="border-r-2 border-b-gray-200">Količina</td>
             <td className="border-r-2 border-b-gray-200">JM</td>
-            <td className="border-r-2 border-b-gray-200">Cena</td>
-            <td className="border-r-2 border-b-gray-200">Rabat</td>
-            <td className="border-r-2 border-b-gray-200">Cena sa rabatom</td>
-            <td className="border-r-2 border-b-gray-200">PDV(%)</td>
-            <td className="border-r-2 border-b-gray-200">Iznos bez PDV-a</td>
+            <td className="border-r-2 border-b-gray-200">Cena po komadu</td>
+            <td className="border-r-2 border-b-gray-200">Ukupno</td>
           </tr>
         </thead>
         {list !== "" &&
@@ -305,10 +246,7 @@ export default function TableFrom({
                     <td className="border-r-2 border-b-gray-200">{quantity}</td>
                     <td className="border-r-2 border-b-gray-200">{jm}</td>
                     <td className="border-r-2 border-b-gray-200">{price}</td>
-                    <td className="border-r-2 border-b-gray-200">{rabat}</td>
-                    <td className="border-r-2 border-b-gray-200">{priceSale}</td>
-                    <td className="border-r-2 border-b-gray-200">{tax}</td>
-                    <td className="amount border-r-2 border-b-gray-200">{priceSale}</td>
+                    <td className="amount">{amount}</td>
                     <td className="">
                       <button onClick={() => deleteTableRow(id)}>
                         <BsTrash className="text-red-700" />
@@ -326,43 +264,10 @@ export default function TableFrom({
           )}
       </table>
       <div className="flex items-end justify-end text-base font-bold text-gray-800">
-        <span className="pr-3 font-bold"> Ukupno: </span>
+        <span className="pr-3 font-bold"> Ukupna cena: </span>
         <div className="flex items-center">
           <span>
-            {total.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-            din
-          </span>
-        </div>
-      </div>
-      <div className="flex items-end justify-end text-base text-gray-800">
-        <span className="pr-3  font-normal">
-          PDV 20% Osnovica:
-          {total.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
-        </span>
-        <div className="flex items-center">
-          <span>
-            {(total - total * (1 - tax / 100)).toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-            din
-          </span>
-        </div>
-      </div>
-      <div className="flex items-end justify-end pb-5 text-base font-bold text-gray-800">
-        <span className="font-me pr-3"> Ukupno sa PDV: </span>
-        <div className="flex items-center font-normal">
-          <span>
-            {(total + (total - total * (1 - tax / 100))).toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
+            {formattedTotal}
             din
           </span>
         </div>

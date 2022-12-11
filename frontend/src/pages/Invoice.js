@@ -209,24 +209,13 @@ export default function Invoice() {
                     quantity={quantity}
                     jm={jm}
                     price={price}
-                    rabat={rabat}
                     amount={amount}
-                    priceSale={priceSale}
-                    tax={tax}
                     list={list}
                     total={total}
                     setTotal={setTotal}
                   />
                   <Notes notes={notes} />
-                  <Footer
-                    name={name}
-                    address={address}
-                    email={email}
-                    website={website}
-                    phone={phone}
-                    bankName={bankName}
-                    bankAccount={bankAccount}
-                  />
+                  <Footer />
                 </div>
               </div>
             </PDFExport>
@@ -608,7 +597,7 @@ export default function Invoice() {
                   htmlFor="clientPlate"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Tablica automobila
+                  Reg Oznaka
                 </label>
               </div>
             </div>
@@ -626,12 +615,6 @@ export default function Invoice() {
               setJm={setJm}
               price={price}
               setPrice={setPrice}
-              rabat={rabat}
-              setRabat={setRabat}
-              priceSale={priceSale}
-              setPriceSale={setPriceSale}
-              tax={tax}
-              setTax={setTax}
               amount={amount}
               setAmount={setAmount}
               list={list}

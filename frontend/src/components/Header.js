@@ -24,13 +24,16 @@ export default function Header({
             <p className="text-[14px]">
               {address} {postalCode}
             </p>
-            <p className="text-[14px]">
-              {email}; {website};
-            </p>
+            <p className="text-[14px]">PIB: 108946375</p>
+            <p className="text-[14px]">Matični broj: 63814962</p>
+            <p className="text-[14px]">Šifra delatnosti: 4520.7711</p>
             <p className="text-[14px]">
               Broj tekućeg računa: {bankName}, {bankAccount} , {bankAccount2};
             </p>
-            <p className="text-[14px]">Broj telefona: {phone};</p>
+            <p className="text-[14px]">
+              {email}; {website};
+            </p>
+            <p className="text-[14px]">Broj telefona: {phone} / 0631570587 </p>
           </div>
         </div>
         {/* <div className="flex flex-wrap items-center justify-between gap-x-2">

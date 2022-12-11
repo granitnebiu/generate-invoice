@@ -18,9 +18,9 @@ export default function Invoice() {
   const rangeNumber = Math.floor(Math.random() * 9999) + 1000;
   const [showInvoice, setShowInvoice] = useState(false);
   const [active, setActive] = useState(false);
-  const [name, setName] = useState("'XIMI AUTO CENTER' d.o.o");
+  const [name, setName] = useState(`"GEZIM MEMISHI PR AUTOLAKERSKA RADNJA LLAKER XIMI PREŠEVO"`);
   const [address, setAddress] = useState("Gnjilanska br.93");
-  const [postalCode, setCityPostalCode] = useState("17523, Presevo, Serbia");
+  const [postalCode, setCityPostalCode] = useState("17523, Preševo , Srbija");
   const [email, setEmail] = useState("gezim.memishii@gmail.com");
   const [phone, setPhone] = useState("+381638605367");
   const [bankName, setBankName] = useState("NLB Komercijalna banka ad Beograd");

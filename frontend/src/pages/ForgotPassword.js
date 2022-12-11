@@ -14,7 +14,7 @@ import LOGO from "../../src/images/logo-ximi.png";
 import { AiOutlineLogin, AiOutlineUser } from "react-icons/ai";
 
 const forgetPasswordValidations = Yup.object({
-  email: Yup.string().email().required("Email is required"),
+  email: Yup.string().email().required("Email je obavezan"),
 });
 
 export default function ForgotPassword() {
@@ -43,7 +43,7 @@ export default function ForgotPassword() {
         }
       })
       .catch(function (error) {
-        console.log("this is error" + error);
+        // console.log("this is error" + error);
         toast.error(error.data.error);
         // console.log(error);
       });
@@ -54,7 +54,7 @@ export default function ForgotPassword() {
     <div className="flex h-screen w-screen items-center justify-center">
       <div className="flex w-[85%] flex-col items-center justify-center space-y-10 rounded-xl bg-white p-16 shadow-xl md:w-auto ">
         <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
-        <h3 className="text-2xl font-bold text-primary">Forgot Password</h3>
+        <h3 className="text-2xl font-bold text-primary">Zaboravili ste lozinku</h3>
         <form
           className="w-64 md:w-96"
           autoComplete="off"
@@ -65,7 +65,7 @@ export default function ForgotPassword() {
             name="email"
             id="email"
             value={email}
-            label="Your Email"
+            label="Vaša e-pošta"
             onChange={(e) => setEmail(e.target.value)}
             register={{ ...register("email") }}
             error={errors.email}
@@ -75,12 +75,12 @@ export default function ForgotPassword() {
           <div className="mt-4 flex flex-col justify-between gap-y-2 md:flex-row md:gap-y-0">
             <p className="forgot-password select-none ">
               <a className="flex items-center gap-x-1 hover:text-primary" href="/sign-in">
-                <AiOutlineUser /> Sign In
+                <AiOutlineUser /> Prijavite se
               </a>
             </p>
             <p className="forgot-password select-none ">
               <a className="flex items-center gap-x-1 hover:text-primary" href="/sing-up">
-                <AiOutlineLogin /> Register User
+                <AiOutlineLogin /> Registrujte korisnika
               </a>
             </p>
           </div>

@@ -16,15 +16,13 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 const auth = getAuth(firebase);
 
 const singUpValidation = Yup.object({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("Your last name is required"),
+  firstName: Yup.string().required("Ime je obavezno"),
+  lastName: Yup.string().required("Vaše prezime je obavezno"),
   // mobiles: Yup.number().required("Phone number is required"),
   // otp: Yup.number().required("OTP is required"),
-  email: Yup.string().email().required("Email is required"),
-  password: Yup.string()
-    .required("Password is mandatory")
-    .min(7, "Password must be at 7 char long"),
-  confirmPassword: Yup.string().required("Password is mandatory does not match"),
+  email: Yup.string().email().required("Email je obavezan"),
+  password: Yup.string().required("Lozinka je obavezna").min(7, "Lozinka mora da ima 7 znakova"),
+  confirmPassword: Yup.string().required("Lozinka je obavezna ne odgovara"),
 });
 
 export default function SignUp() {
@@ -90,12 +88,12 @@ export default function SignUp() {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        toast.info("OTP sended");
+        toast.info("OTP poslat");
         setVerifyOtpButton(true);
       })
       .catch((error) => {
         if (error) {
-          toast.error("Error; SMS not sent. You have tried to many times");
+          toast.error("Greška; SMS nije poslat. Pokušali ste mnogo puta");
         }
       });
   };
@@ -108,14 +106,16 @@ export default function SignUp() {
         // User signed in successfully.
         // const user = result.user;
         // console.log(user);
-        toast.success("Verification done");
+        toast.success("Verifikacija obavljena");
 
         setShowVerified(true);
         setVerifyOtpButton(false);
         // ...
       })
       .catch((error) => {
-        toast.error("User couldn't verify phone number (bad verification code?)");
+        toast.error(
+          "Korisnik nije mogao da verifikuje broj telefona (neispravan verifikacioni kod??)"
+        );
       });
   };
 
@@ -133,7 +133,7 @@ export default function SignUp() {
         .post("/register", addUser)
         .then(function (response) {
           if (response.data.status === "OK") {
-            toast.success("User has been registered");
+            toast.success("Korisnik je registrovan");
             formRef.current.reset();
             reset({
               fullName: "",
@@ -159,7 +159,7 @@ export default function SignUp() {
         });
       // console.log(addUser);
     } else {
-      toast.error("Please Verify Phone Number");
+      toast.error("Molimo potvrdite broj telefona");
     }
   };
 
@@ -167,7 +167,7 @@ export default function SignUp() {
     <div className="flex h-screen w-screen items-center justify-center">
       <div className="flex w-[85%] flex-col items-center justify-center space-y-10 rounded-xl bg-white p-16 shadow-xl md:w-auto ">
         <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
-        <h3 className="text-2xl font-bold text-primary">Register User</h3>
+        <h3 className="text-2xl font-bold text-primary">Registrujte korisnika</h3>
         {/* <form className="w-96" autoComplete="off" onSubmit={handleSubmit}> */}
         <form
           ref={formRef}
@@ -181,7 +181,7 @@ export default function SignUp() {
             name="firstName"
             id="firstName"
             value={firstName}
-            label="Your First Name"
+            label="Tvoje ime"
             onChange={(e) => setFirstName(e.target.value)}
             register={{ ...register("firstName") }}
             error={errors.firstName}
@@ -191,7 +191,7 @@ export default function SignUp() {
             name="lastName"
             id="lastName"
             value={lastName}
-            label="Your Last Name"
+            label="Tvoje prezime"
             onChange={(e) => setLastName(e.target.value)}
             register={{ ...register("lastName") }}
             error={errors.lastName}
@@ -201,7 +201,7 @@ export default function SignUp() {
             type="number"
             name="mobile"
             id="mobile"
-            label="Your Phone Number"
+            label="Vaš broj telefona"
             value={mobile}
             onChange={(e) => ChangeMobile(e)}
             showHelperText={true}
@@ -219,7 +219,7 @@ export default function SignUp() {
               onClick={() => onSendOTP()}
               btnType="button"
               disabled={showVerified ? true : false}
-              btnName={`${showVerified ? "Verified" : "Send OTP"}`}
+              btnName={`${showVerified ? "Provereno" : "Pošalji OTP"}`}
             />
           )}
           {/* END OF PHONE NUMBER  */}
@@ -228,7 +228,7 @@ export default function SignUp() {
             <>
               <Input
                 type="number"
-                label="Your OTP"
+                label="Vaš OTP"
                 name="otp"
                 id="otp"
                 onChange={(e) => setOtp(e.target.value)}
@@ -240,7 +240,7 @@ export default function SignUp() {
                 extraClass={`w-full !p-1 mb-8 hover:!bg-gray-300 hover:border-transparent hover:text-black`}
                 onClick={() => VerifyCode()}
                 btnType="button"
-                btnName="Verify OTP"
+                btnName="Proveriti OTP"
               />
             </>
           )}
@@ -250,7 +250,7 @@ export default function SignUp() {
             name="email"
             id="email"
             value={email}
-            label="Your Email"
+            label="Vaša e-pošta"
             onChange={(e) => setEmail(e.target.value)}
             register={{ ...register("email") }}
             error={errors.email}
@@ -260,7 +260,7 @@ export default function SignUp() {
             name="password"
             id="password"
             value={password}
-            label="Your Password"
+            label="Tvoja lozinka"
             onChange={(e) => setPassword(e.target.value)}
             register={{ ...register("password") }}
             error={errors.password}
@@ -270,17 +270,17 @@ export default function SignUp() {
             name="confirmPassword"
             id="confirmPassword"
             value={confirmPassword}
-            label="Confirm Password"
+            label="Potvrdi lozinku"
             onChange={(e) => setConfirmPassword(e.target.value)}
             register={{ ...register("confirmPassword") }}
             error={errors.confirmPassword}
           />
-          <Button btnType="submit" btnName="Sign Up" />
+          <Button btnType="submit" btnName="Registrujte korisnika" />
           {/* <input type="submit" value="Sign Up" /> */}
           <p className="forgot-password mt-8 text-right md:mt-0">
-            Already registered{" "}
+            Već registrovani{" "}
             <a className="font-medium text-primary hover:text-gray-500" href="/sign-in">
-              sign in?
+              Prijavite se?
             </a>
           </p>
         </form>

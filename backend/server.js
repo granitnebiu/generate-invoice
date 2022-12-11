@@ -60,10 +60,10 @@ app.post("/post", async (req, res) => {
     if (data === "granit") {
       res.send({ status: "OK" });
     } else {
-      res.send({ status: "user not found" });
+      res.send({ status: "Korisnik nije pronađen" });
     }
   } catch (error) {
-    res.send({ status: "something went wrong try again" });
+    res.send({ status: "Nešto je pošlo po zlu pokušajte ponovo" });
   }
 });
 
@@ -106,7 +106,7 @@ app.post("/register", async (req, res) => {
     });
     res.send({ status: "OK" });
   } catch (error) {
-    res.send({ status: "something went wrong try again" });
+    res.send({ status: "Nešto je pošlo po zlu pokušajte ponovo" });
   }
 });
 
@@ -133,7 +133,7 @@ app.post("/login-user", async (req, res) => {
       return res.json({ error: "error" });
     }
   }
-  res.json({ status: "error", error: "invalid password" });
+  res.json({ status: "error", error: "Nevažeća lozinka" });
 });
 
 //creating api to get user data (user logged in)
@@ -169,7 +169,7 @@ app.post("/forgot-password", async (req, res) => {
     const userExists = await User.findOne({ email });
     //checking if the user exists or not
     if (!userExists) {
-      return res.json({ status: "User does not exists" });
+      return res.json({ status: "Korisnik ne postoji" });
     }
 
     //generating new token which will be sended to our user
@@ -209,7 +209,7 @@ app.post("/forgot-password", async (req, res) => {
     //send response to user
     if (userExists) {
       return res.json({
-        status: "Reset password link send to email",
+        status: "Link za resetovanje lozinke pošaljite na e-poštu",
         info: "ok",
         redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
       });
@@ -222,7 +222,7 @@ app.get("/reset-password/:id/:token", async (req, res) => {
   // console.log(req.params);
   const userExists = await User.findOne({ _id: id });
   if (!userExists) {
-    return res.json({ status: "User does not exists" });
+    return res.json({ status: "Korisnik ne postoji" });
   }
   //we need the secret to verify if the secret belong to us or not
   const secret = JWT_SECRET + userExists.password;
@@ -232,7 +232,7 @@ app.get("/reset-password/:id/:token", async (req, res) => {
     const verify = jwt.verify(token, secret);
     res.render("index", {
       email: verify.email,
-      status: "Password was not changed, something went wrong",
+      status: "Lozinka nije promenjena, nešto je pošlo naopako",
       redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
     });
   } catch (error) {
@@ -246,15 +246,15 @@ app.post(
     check("password")
       .exists({ checkFalsy: true })
 
-      .withMessage("You must type a password")
+      .withMessage("Morate da unesete lozinku")
       .isLength({ min: 7 })
-      .withMessage("The password need to be more then 7 character"),
+      .withMessage("Lozinka treba da ima više od 7 znakova"),
     check("confirmedPassword")
       .exists({ checkFalsy: true })
 
-      .withMessage("You must type a confirmation password")
+      .withMessage("Morate da unesete lozinku za potvrdu")
       .custom((value, { req }) => value === req.body.password)
-      .withMessage("The passwords do not match"),
+      .withMessage("Lozinke se ne poklapaju"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -263,7 +263,7 @@ app.post(
     const { password } = req.body;
     const userExists = await User.findOne({ _id: id });
     if (!userExists) {
-      return res.json({ status: "User does not exists" });
+      return res.json({ status: "Korisnik ne postoji" });
     }
     //we need the secret to verify if the secret belong to us or not
     const secret = JWT_SECRET + userExists.password;
@@ -278,7 +278,7 @@ app.post(
         res.render("index", {
           alert,
           email: verify.email,
-          status: "failed",
+          status: "Nije uspeo",
           redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
         });
       } else {
@@ -298,13 +298,13 @@ app.post(
 
         res.render("index", {
           email: verify.email,
-          status: "password updated",
+          status: "lozinka je ažurirana",
           redirectLink: process.env.LOCAL_LINK_FRONTEND || process.env.PRODUCTION_LINK_FRONTEND,
         });
       }
       // res.json({ status: "password updated" });
     } catch (error) {
-      res.json({ status: "Something when wrong" });
+      res.json({ status: "Nešto je krenulo naopako" });
     }
   }
 );

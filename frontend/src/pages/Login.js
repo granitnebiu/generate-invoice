@@ -14,8 +14,8 @@ import LOGO from "../../src/images/logo-ximi.png";
 import { AiFillLock, AiOutlineLogin } from "react-icons/ai";
 
 const loginValidation = Yup.object({
-  email: Yup.string().email().required("Email is required"),
-  password: Yup.string().required("Password is mandatory"),
+  email: Yup.string().email().required("Email je obavezan"),
+  password: Yup.string().required("Lozinka je obavezna"),
 });
 
 export default function Login() {
@@ -44,7 +44,7 @@ export default function Login() {
       .then(function (response) {
         console.log(response);
         if (response.data.status === "ok") {
-          toast.success("User logged in");
+          toast.success("Korisnik je prijavljen");
           window.localStorage.setItem("token", response.data.token);
           const interval = setInterval(() => {
             window.location.href = "./invoice";
@@ -67,7 +67,7 @@ export default function Login() {
     <div className="flex h-screen w-screen  items-center justify-center">
       <div className="flex w-[85%] flex-col items-center justify-center space-y-10 rounded-xl bg-white p-16 shadow-xl md:w-auto ">
         <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
-        <h3 className="text-2xl font-bold text-primary">Sign In</h3>
+        <h3 className="text-2xl font-bold text-primary">Prijavite se</h3>
         <form
           ref={formRef}
           className="w-64 md:w-96"
@@ -79,7 +79,7 @@ export default function Login() {
             name="email"
             id="email"
             value={email}
-            label="Your Email"
+            label="Vaša e-pošta"
             required={true}
             onChange={(e) => setEmail(e.target.value)}
             register={{ ...register("email") }}
@@ -91,7 +91,7 @@ export default function Login() {
             name="password"
             id="password"
             value={password}
-            label="Your Password"
+            label="Tvoja lozinka"
             required={true}
             onChange={(e) => setPassword(e.target.value)}
             register={{ ...register("password") }}
@@ -102,12 +102,12 @@ export default function Login() {
           <div className="mt-4 flex flex-col justify-between gap-y-2 md:flex-row md:gap-y-0">
             <p className="forgot-password select-none ">
               <a className="flex items-center gap-x-1 hover:text-primary" href="/forgot-password">
-                <AiFillLock /> Forgot Password
+                <AiFillLock /> Zaboravili ste lozinku
               </a>
             </p>
             <p className="forgot-password select-none ">
               <a className="flex items-center gap-x-1 hover:text-primary" href="/sing-up">
-                <AiOutlineLogin /> Register User
+                <AiOutlineLogin /> Registrujte korisnika
               </a>
             </p>
           </div>

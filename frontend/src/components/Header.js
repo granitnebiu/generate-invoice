@@ -1,14 +1,35 @@
 import React from "react";
 import LOGO from "../../src/images/logo-ximi.png";
 
-export default function Header({ handlePrint }) {
+export default function Header({
+  name,
+  address,
+  postalCode,
+  email,
+  phone,
+  website,
+  bankName,
+  bankAccount,
+  bankAccount2,
+}) {
   return (
     <>
-      <div className="my-6 h-4 w-full bg-red-700"></div>
       <header className="mb-5 flex flex-col items-center justify-center  xl:flex-row xl:justify-between  ">
         <div className="flex w-full justify-between">
-          <h1 className="mb-3 text-4xl font-bold uppercase tracking-wide">Invoice</h1>
-          <img src={LOGO} alt="logo auto ximi" className=" h-auto w-64" />
+          <img src={LOGO} alt="logo auto ximi" className=" h-auto w-40" />
+          <div className="w-1/2 text-right">
+            <p className="text-[16px] font-bold">{name}</p>
+            <p className="text-[14px]">
+              {address} {postalCode}
+            </p>
+            <p className="text-[14px]">
+              {email}; {website};
+            </p>
+            <p className="text-[14px]">
+              Broj tekućeg računa: {bankName}, {bankAccount} , {bankAccount2};
+            </p>
+            <p className="text-[14px]">Broj telefona: {phone};</p>
+          </div>
         </div>
         {/* <div className="flex flex-wrap items-center justify-between gap-x-2">
           <button
@@ -33,6 +54,7 @@ export default function Header({ handlePrint }) {
           </button>
         </div> */}
       </header>
+      <div className="my-6 h-2 w-full bg-red-700"></div>
     </>
   );
 }

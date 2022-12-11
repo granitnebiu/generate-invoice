@@ -36,7 +36,7 @@ export default function Input({
       </label>
       {showHelperText === true && (
         <p className="pt-1 text-[10px] text-gray-400">
-          example: 62123123, no zero, no prefix, no plus
+          primer: 62123123, bez nula ispred, bez prefiksa ispred, bez plus ispred
         </p>
       )}
     </div>

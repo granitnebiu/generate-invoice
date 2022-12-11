@@ -15,26 +15,38 @@ import { BiLogOut, BiReset } from "react-icons/bi";
 import axios from "src/utils/axios";
 
 export default function Invoice() {
+  const rangeNumber = Math.floor(Math.random() * 9999) + 1000;
   const [showInvoice, setShowInvoice] = useState(false);
   const [active, setActive] = useState(false);
-  const [name, setName] = useState("Auto Llaker 'Ximi'");
-  const [address, setAddress] = useState("Rruga e Gjilanit 93");
-  const [postalCode, setCityPostalCode] = useState("Presevë, Serbia, 17523");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("'XIMI AUTO CENTER' d.o.o");
+  const [address, setAddress] = useState("Gnjilanska br.93");
+  const [postalCode, setCityPostalCode] = useState("17523, Presevo, Serbia");
+  const [email, setEmail] = useState("gezim.memishii@gmail.com");
   const [phone, setPhone] = useState("+381638605367");
-  const [bankName, setBankName] = useState("");
-  const [bankAccount, setBankAccount] = useState("");
-  const [website, setWebsite] = useState("");
+  const [bankName, setBankName] = useState("NLB Komercijalna banka ad Beograd");
+  const [bankAccount, setBankAccount] = useState("205-0000000219775-72");
+  const [bankAccount2, setBankAccount2] = useState("205-0071000545931-76");
+  const [website, setWebsite] = useState("www.ximiautocenter.me");
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
+  const [clientPib, setClientPib] = useState("");
+  const [clientMb, setClientMb] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [datumValute, setDatumValute] = useState("");
   const [notes, setNotes] = useState("");
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [articleNumber, setArticleNumber] = useState("XM" + rangeNumber);
+  const [jm, setJm] = useState("kom");
+  const [rabat, setRabat] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState("");
-  const [amount, setAmount] = useState("");
+
+  // const [priceTax, setPriceTax] = useState("");
+  const [tax, setTax] = useState(20);
+  const [amount, setAmount] = useState(0);
+  const [priceSale, setPriceSale] = useState();
   const [list, setList] = useState("");
   const [total, setTotal] = useState(0);
 
@@ -122,14 +134,14 @@ export default function Invoice() {
             className=" flex items-center space-x-2 text-[14px] hover:text-primary"
           >
             <BiLogOut />
-            <span>Log out</span>
+            <span>Odjaviti se</span>
           </button>
           <button
             onClick={(e) => handleReset(e)}
             className=" flex items-center space-x-2 text-[14px] hover:text-primary"
           >
             <BiReset />
-            <span>Forget Password</span>
+            <span>Zaboravili ste lozinku</span>
           </button>
         </div>
       </div>
@@ -160,21 +172,45 @@ export default function Invoice() {
                   className="paper-bg m-[30mm 45mm 30mm 45mm] mx-auto mt-4 h-[29.7cm] w-[21cm] border-2 bg-white p-5 shadow-xl"
                   ref={componentRef}
                 >
-                  <Header />
-                  <MainDetails
+                  <Header
                     name={name}
-                    address={address}
                     email={email}
+                    address={address}
                     postalCode={postalCode}
                     phone={phone}
+                    website={website}
+                    bankName={bankName}
+                    bankAccount={bankAccount}
+                    bankAccount2={bankAccount2}
                   />
-                  <ClientDetails clientName={clientName} clientAddress={clientAddress} />
-                  <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} />
+                  <div className="flex justify-between">
+                    <MainDetails
+                      name={name}
+                      address={address}
+                      email={email}
+                      postalCode={postalCode}
+                      phone={phone}
+                      invoiceDate={invoiceDate}
+                      datumValute={datumValute}
+                    />
+                    <ClientDetails
+                      clientName={clientName}
+                      clientMb={clientMb}
+                      clientPib={clientPib}
+                      clientAddress={clientAddress}
+                    />
+                  </div>
+                  {/* <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} /> */}
                   <Table
+                    articleNumber={articleNumber}
                     description={description}
-                    amount={amount}
-                    price={price}
                     quantity={quantity}
+                    jm={jm}
+                    price={price}
+                    rabat={rabat}
+                    amount={amount}
+                    priceSale={priceSale}
+                    tax={tax}
                     list={list}
                     total={total}
                     setTotal={setTotal}
@@ -202,6 +238,9 @@ export default function Invoice() {
         ) : (
           <>
             {/* name and address, street */}
+            <p className="mb-4 font-medium text-gray-400 underline decoration-red-500/60">
+              Podaci o kompaniji
+            </p>
             <div className="my-4 grid md:grid-cols-3 md:gap-6">
               {/* name */}
               <div className="group relative z-0 mb-6 w-full">
@@ -221,7 +260,7 @@ export default function Invoice() {
                   htmlFor="name"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your name
+                  Svoje ime i prezime
                 </label>
               </div>
               {/* address */}
@@ -241,7 +280,7 @@ export default function Invoice() {
                   htmlFor="address"
                   className=" absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform pl-3 text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your address
+                  Vaša adresa
                 </label>
               </div>
               <div className="group relative z-0 mb-6 w-full">
@@ -260,12 +299,11 @@ export default function Invoice() {
                   htmlFor="cityPostalCode"
                   className=" absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform pl-3 text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  City/PostalCode
+                  Grad/poštanski broj
                 </label>
               </div>
             </div>
             {/* email, website and phone */}
-
             <div className="mb-4 grid md:grid-cols-3 md:gap-6">
               {/* email  */}
               <div className="group relative z-0 mb-6 w-full">
@@ -284,7 +322,7 @@ export default function Invoice() {
                   htmlFor="email"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your email
+                  Vaš email
                 </label>
               </div>
               {/* website   */}
@@ -304,7 +342,7 @@ export default function Invoice() {
                   htmlFor="website"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your website
+                  Vaš website
                 </label>
               </div>
               {/* phone   */}
@@ -324,12 +362,15 @@ export default function Invoice() {
                   htmlFor="phone"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your phone
+                  Vaš broj telefona
                 </label>
               </div>
             </div>
             {/* bankName and bankAccount   */}
-            <div className="mb-4 grid md:grid-cols-2 md:gap-6">
+            <p className="mb-4 font-medium text-gray-400 underline decoration-red-500/60">
+              Podaci o banci
+            </p>
+            <div className="mb-4 grid md:grid-cols-3 md:gap-6">
               {/* bankName   */}
               <div className="group relative z-0 mb-6 w-full">
                 <input
@@ -346,13 +387,13 @@ export default function Invoice() {
                   htmlFor="bankName"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Bank Name
+                  Naziv svoje banke
                 </label>
               </div>
               {/* bankAccount   */}
               <div className="group relative z-0 mb-6 w-full">
                 <input
-                  type="number"
+                  type="text"
                   name="bankAccount"
                   id="bankAccount"
                   autoComplete="off"
@@ -365,13 +406,34 @@ export default function Invoice() {
                   htmlFor="bankAccount"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Bank Account Number
+                  Tekući računi
                 </label>
               </div>
-            </div>
-
+              {/* bankAccount   */}
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="bankAccount2"
+                  id="bankAccount2"
+                  autoComplete="off"
+                  value={bankAccount2}
+                  onChange={(e) => setBankAccount2(e.target.value)}
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="bankAccount2"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Tekući računi 2
+                </label>
+              </div>
+            </div>{" "}
+            <p className="mb-4 font-medium text-gray-400 underline decoration-red-500/60">
+              Informacije o klijentima
+            </p>
             {/* clientName and client address   */}
-            <div className="mb-4 grid md:grid-cols-2 md:gap-6">
+            <div className="mb-4 grid md:grid-cols-4 md:gap-6">
               {/* clientName   */}
               <div className="group relative z-0 mb-6 w-full">
                 <input
@@ -390,7 +452,7 @@ export default function Invoice() {
                   htmlFor="clientName"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Client's Name
+                  Ime vašeg klijenta
                 </label>
               </div>
               {/* clientAddress   */}
@@ -410,14 +472,50 @@ export default function Invoice() {
                   htmlFor="clientAddress"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Client's Address
+                  Adresa klijenta
+                </label>
+              </div>
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="clientPib"
+                  id="clientPib"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={clientPib}
+                  onChange={(e) => setClientPib(e.target.value)}
+                />
+                <label
+                  htmlFor="clientPib"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  PIB Kliijenta
+                </label>
+              </div>
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="clientMb"
+                  id="clientMb"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={clientMb}
+                  onChange={(e) => setClientMb(e.target.value)}
+                />
+                <label
+                  htmlFor="clientMb"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  MB Kliijenta
                 </label>
               </div>
             </div>
             {/* invoiceNumber, invoiceDate, and DueDate    */}
             <div className="mb-4 grid md:grid-cols-3 md:gap-6">
               {/* invoiceNumber   */}
-              <div className="group relative z-0 mb-6 w-full">
+              {/* <div className="group relative z-0 mb-6 w-full">
                 <input
                   type="text"
                   name="invoiceNumber"
@@ -432,9 +530,9 @@ export default function Invoice() {
                   htmlFor="invoiceNumber"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Invoice Number
+                  Unesite broj svoje fakture
                 </label>
-              </div>
+              </div> */}
               {/* invoiceDate   */}
               <div className="group relative z-0 mb-6 w-full">
                 <input
@@ -451,7 +549,7 @@ export default function Invoice() {
                   htmlFor="invoiceDate"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Invoice Date
+                  Datum izdavanja računa
                 </label>
               </div>
               {/* Due date  */}
@@ -470,25 +568,56 @@ export default function Invoice() {
                   htmlFor="dueDate"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Enter your Due Date
+                  Datum prometa dobara:
+                </label>
+              </div>
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="date"
+                  name="datumValute"
+                  id="datumValute"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={datumValute}
+                  onChange={(e) => setDatumValute(e.target.value)}
+                />
+                <label
+                  htmlFor="datumValute"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Datum valute:
                 </label>
               </div>
             </div>
+            <p className="mb-8 font-medium text-gray-400 underline decoration-red-500/60">
+              Tabela proizvoda
+            </p>
             <TableFrom
+              articleNumber={articleNumber}
+              setArticleNumber={setArticleNumber}
               setDescription={setDescription}
               description={description}
-              setAmount={setAmount}
-              amount={amount}
-              setPrice={setPrice}
-              price={price}
-              setQuantity={setQuantity}
               quantity={quantity}
+              setQuantity={setQuantity}
+              jm={jm}
+              setJm={setJm}
+              price={price}
+              setPrice={setPrice}
+              rabat={rabat}
+              setRabat={setRabat}
+              priceSale={priceSale}
+              setPriceSale={setPriceSale}
+              tax={tax}
+              setTax={setTax}
+              amount={amount}
+              setAmount={setAmount}
               list={list}
               setList={setList}
               total={total}
               setTotal={setTotal}
+              rangeNumber={rangeNumber}
             />
-
             {/* client notes  */}
             <div className="mb-4 grid md:grid-cols-1 md:gap-6">
               <div className="group relative z-0 mb-6 w-full">
@@ -507,7 +636,7 @@ export default function Invoice() {
                   htmlFor="notes"
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
-                  Notes for Client
+                  Poruka za klijenta
                 </label>
               </div>
             </div>
@@ -516,7 +645,7 @@ export default function Invoice() {
                 onClick={() => setShowInvoice(true)}
                 className="rounded border-2 border-primary bg-primary px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-primary"
               >
-                Preview Invoice
+                Pregled fakture
               </button>
             </div>
           </>

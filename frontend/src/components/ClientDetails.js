@@ -1,11 +1,15 @@
 import React from "react";
 
-export default function ClientDetails({ clientName, clientAddress }) {
+export default function ClientDetails({ clientName, clientAddress, clientPib, clientMb }) {
   return (
     <>
-      <section className="mt-5">
-        <h2 className="text-2xl font-bold uppercase">{clientName}</h2>
-        <p>{clientAddress}</p>
+      <section className="w-1/2 border-2 text-center">
+        <p className="font-bold">KUPAC</p>
+        <p className="">{clientName}</p>
+
+        <p>PIB: {clientPib}</p>
+        <p>MB: {clientMb}</p>
+        <p className="mt-4">{clientAddress}</p>
       </section>
     </>
   );

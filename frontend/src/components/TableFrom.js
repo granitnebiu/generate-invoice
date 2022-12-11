@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { BsTrash } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
-import { BsCurrencyEuro } from "react-icons/bs";
+// import { BsCurrencyEuro } from "react-icons/bs";
 import { v4 as uuid } from "uuid";
 import { toast } from "react-toastify";
 
 export default function TableFrom({
+  articleNumber,
+  setArticleNumber,
   description,
   setDescription,
   quantity,
   setQuantity,
-  amount,
-  setAmount,
+  jm,
+  setJm,
   price,
   setPrice,
+  rabat,
+  setRabat,
+  priceSale,
+  setPriceSale,
+  tax,
+  setTax,
+  amount,
+  setAmount,
   setList,
   list,
   total,
   setTotal,
+  rangeNumber,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   //create unique ID
@@ -27,19 +38,25 @@ export default function TableFrom({
     e.preventDefault();
 
     if (!description || !quantity || !price) {
-      toast.error("Item Description, quantity and price is required");
+      toast.error("Opis artikla, količina i cena su obavezni");
     } else {
       const newItems = {
         id: unique_id,
         description,
+        articleNumber,
         quantity,
+        jm,
         price,
+        rabat,
+        priceSale,
         amount,
+        tax,
       };
       setDescription("");
-      setQuantity("");
+      setQuantity(1);
       setPrice("");
       setAmount("");
+      setArticleNumber("XM" + rangeNumber);
       setList([...list, newItems]);
       setIsEditing(false);
     }
@@ -47,7 +64,11 @@ export default function TableFrom({
   //calculate Items amount
   useEffect(() => {
     setAmount(quantity * price);
-  }, [quantity, price, setAmount]);
+  }, [quantity, price, setAmount, setArticleNumber, articleNumber]);
+
+  useEffect(() => {
+    setPriceSale((quantity * price * (1 - rabat / 100)).toFixed(2));
+  }, [price, rabat, quantity, setPriceSale]);
 
   //calculate total amount of items in table
   useEffect(() => {
@@ -73,15 +94,38 @@ export default function TableFrom({
     const editingRow = list.find((row) => row.id === id);
     setList(list.filter((row) => row.id !== id));
     setIsEditing(true);
+    setArticleNumber(editingRow.articleNumber);
     setDescription(editingRow.description);
+    setJm(editingRow.jm);
     setQuantity(editingRow.quantity);
     setPrice(editingRow.price);
+    setRabat(editingRow.rabat);
+    setTax(editingRow.tax);
   };
 
   return (
     <>
       <form className="" onSubmit={handleSubmit}>
         <div className=" grid md:grid-cols-4 md:gap-6">
+          {/* article number */}
+          <div className="group relative z-0 w-full">
+            <input
+              type="text"
+              name="article_number"
+              id="article_number"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+              placeholder=" "
+              autoComplete="off"
+              value={articleNumber}
+              onChange={(e) => setArticleNumber(e.target.value)}
+            />
+            <label
+              htmlFor="article_number"
+              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+            >
+              Šifra artikla
+            </label>
+          </div>
           {/* description */}
           <div className="group relative z-0 w-full">
             <input
@@ -98,7 +142,26 @@ export default function TableFrom({
               htmlFor="description"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Item Description
+              Naziv artikla
+            </label>
+          </div>
+          {/* description */}
+          <div className="group relative z-0 w-full">
+            <input
+              type="text"
+              name="JM"
+              id="JM"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+              placeholder=" "
+              autoComplete="off"
+              value={jm}
+              onChange={(e) => setJm(e.target.value)}
+            />
+            <label
+              htmlFor="JM"
+              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+            >
+              JM
             </label>
           </div>
           {/* quantity */}
@@ -117,7 +180,7 @@ export default function TableFrom({
               htmlFor="quantity"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Quantity
+              Količina
             </label>
           </div>
           {/* prise */}
@@ -136,7 +199,59 @@ export default function TableFrom({
               htmlFor="prise"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Price
+              Cena
+            </label>
+          </div>
+          <div className="group relative z-0  w-full">
+            <input
+              type="number"
+              name="rabat"
+              id="rabat"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+              placeholder=" "
+              autoComplete="off"
+              value={rabat}
+              onChange={(e) => setRabat(e.target.value)}
+            />
+            <label
+              htmlFor="rabat"
+              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+            >
+              Rabat
+            </label>
+          </div>
+          {/* amount */}
+          <div className="group relative z-0 w-full">
+            <p
+              id="cena_sa_rabatom"
+              className="disabled peer block w-full select-none appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+            >
+              {priceSale}
+            </p>
+            <label
+              htmlFor="cena_sa_rabatom"
+              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+            >
+              Cena sa rabatom
+            </label>
+          </div>
+          <div className="group relative z-0  w-full">
+            <input
+              type="number"
+              name="tax"
+              id="tax"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+              placeholder=" "
+              autoComplete="off"
+              value={tax}
+              onChange={(e) => setTax(e.target.value)}
+              disabled
+            />
+            <label
+              htmlFor="tax"
+              className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+            >
+              PDV(%)
             </label>
           </div>
           {/* amount */}
@@ -145,13 +260,13 @@ export default function TableFrom({
               id="amount"
               className="disabled peer block w-full select-none appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
             >
-              {amount}
+              {priceSale}
             </p>
             <label
               htmlFor="prise"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Amount
+              Iznos bez PDV-a
             </label>
           </div>
         </div>
@@ -168,41 +283,88 @@ export default function TableFrom({
       <table className="mt-5 mb-10 w-full">
         <thead>
           <tr className="bg-gray-100 font-bold">
-            <td>Item Description</td>
-            <td>Quantity</td>
-            <td>Price</td>
-            <td>Amount</td>
+            <td>Šifra artikla</td>
+            <td>Naziv artikla</td>
+            <td>Količina</td>
+            <td>JM</td>
+            <td>Cena</td>
+            <td>Rabat</td>
+            <td>Cena sa rabatom</td>
+            <td>PDV(%)</td>
+            <td>Iznos bez PDV-a</td>
           </tr>
         </thead>
         {list !== "" &&
-          list.map(({ id, description, quantity, price, amount }) => (
-            <React.Fragment key={id}>
-              <thead className="">
-                <tr>
-                  <td>{description}</td>
-                  <td>{quantity}</td>
-                  <td>{price}</td>
-                  <td className="amount">{amount}</td>
-                  <td>
-                    <button onClick={() => deleteTableRow(id)}>
-                      <BsTrash className="text-red-700" />
-                    </button>
-                  </td>
-                  <td>
-                    <button onClick={() => editRow(id)}>
-                      <FiEdit className="text-green-700" />
-                    </button>
-                  </td>
-                </tr>
-              </thead>
-            </React.Fragment>
-          ))}
+          list.map(
+            ({ id, articleNumber, description, quantity, jm, price, rabat, priceSale, amount }) => (
+              <React.Fragment key={id}>
+                <tbody className="">
+                  <tr>
+                    <td>{articleNumber}</td>
+                    <td>{description}</td>
+                    <td>{quantity}</td>
+                    <td>{jm}</td>
+                    <td>{price}</td>
+                    <td>{rabat}</td>
+                    <td>{priceSale}</td>
+                    <td>{tax}</td>
+                    <td className="amount">{priceSale}</td>
+                    <td>
+                      <button onClick={() => deleteTableRow(id)}>
+                        <BsTrash className="text-red-700" />
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => editRow(id)}>
+                        <FiEdit className="text-green-700" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </React.Fragment>
+            )
+          )}
       </table>
-      <div className="flex items-end justify-end pb-5 text-3xl font-bold text-gray-800">
-        <span className="pr-3 text-xl font-normal"> Total: </span>
+      <div className="flex items-end justify-end text-base font-bold text-gray-800">
+        <span className="pr-3 font-bold"> Ukupno: </span>
         <div className="flex items-center">
-          <span> {total.toLocaleString()}</span>
-          <BsCurrencyEuro className="h-6 w-6" />
+          <span>
+            {total.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+            din
+          </span>
+        </div>
+      </div>
+      <div className="flex items-end justify-end text-base text-gray-800">
+        <span className="pr-3  font-normal">
+          PDV 20% Osnovica:
+          {total.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </span>
+        <div className="flex items-center">
+          <span>
+            {(total - total * (1 - tax / 100)).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+            din
+          </span>
+        </div>
+      </div>
+      <div className="flex items-end justify-end pb-5 text-base font-bold text-gray-800">
+        <span className="font-me pr-3"> Ukupno sa PDV: </span>
+        <div className="flex items-center font-normal">
+          <span>
+            {(total + (total - total * (1 - tax / 100))).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+            din
+          </span>
         </div>
       </div>
     </>

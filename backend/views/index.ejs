@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Ximi Auto Center</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -14,9 +14,9 @@
         <div class="min-w-fit flex-col rounded-[4px] border bg-white px-6 py-14 shadow-md">
           <div class="mb-5 mt-5 flex w-full text-center text-sm text-gray-400">
             <p class="w-full">
-              <span>Your email is:</span>
+              <span>Vaša e-pošta je:</span>
               <span class="font-bold"> <%= email %></span> <br />
-              <span>Change Password</span> <br />
+              <span>Promeni lozinku</span> <br />
             </p>
           </div>
 
@@ -43,7 +43,7 @@
             class="hover:bg-black-400 mt-5 w-full scale-105 rounded-[4px] border bg-red-500 bg-gradient-to-r from-red-800 p-2 text-white duration-300"
             type="submit"
           >
-            Change Password
+            Promeni lozinku
           </button>
 
           <% if(typeof alert != 'undefined') { %> <% alert.forEach(function(error) { %>
@@ -65,16 +65,16 @@
     var status = `<%- JSON.stringify(status) %>`;
     var linkToRedirect = `<%- JSON.stringify(redirectLink) %>`;
 
-    if (JSON.parse(status) === "password updated") {
+    if (JSON.parse(status) === "lozinka je ažurirana") {
       const statusMessage = document.getElementById("setstatus");
-      statusMessage.innerHTML = "Password changed! Do you want to";
+      statusMessage.innerHTML = "Lozinka promenjena! da li želite da";
       const addClasses = document.querySelector("div.active");
       addClasses.classList.add("text-black");
       // console.log(addClasses.className);
 
       const buttonCreate = document.getElementById("buttonadd");
       let btn = document.createElement("button");
-      btn.innerHTML = "Sign In";
+      btn.innerHTML = "Prijavite se";
       btn.type = "button";
       btn.classList.add("pl-2", "font-bold", "text-green-700", "hover:text-red-700");
       btn.addEventListener("click", function () {

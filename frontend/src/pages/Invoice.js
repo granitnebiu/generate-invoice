@@ -31,6 +31,8 @@ export default function Invoice() {
   const [clientAddress, setClientAddress] = useState("");
   const [clientPib, setClientPib] = useState("");
   const [clientMb, setClientMb] = useState("");
+  const [clientPlate, setClientPlate] = useState("");
+
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -42,7 +44,6 @@ export default function Invoice() {
   const [rabat, setRabat] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState("");
-
   // const [priceTax, setPriceTax] = useState("");
   const [tax, setTax] = useState(20);
   const [amount, setAmount] = useState(0);
@@ -198,6 +199,7 @@ export default function Invoice() {
                       clientMb={clientMb}
                       clientPib={clientPib}
                       clientAddress={clientAddress}
+                      clientPlate={clientPlate}
                     />
                   </div>
                   {/* <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} /> */}
@@ -587,6 +589,26 @@ export default function Invoice() {
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
                   Datum valute:
+                </label>
+              </div>
+            </div>
+            <div className="mb-4 grid md:grid-cols-3 md:gap-6">
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="clientPlate"
+                  id="clientPlate"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={clientPlate}
+                  onChange={(e) => setClientPlate(e.target.value)}
+                />
+                <label
+                  htmlFor="clientPlate"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Tablica automobila
                 </label>
               </div>
             </div>

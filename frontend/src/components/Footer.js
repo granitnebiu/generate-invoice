@@ -1,9 +1,6 @@
 import React from "react";
 
-export default function Footer({ email, name, website, bankName, phone, bankAccount }) {
-  const rangeNumber = Math.floor(Math.random() * 9999) + 1;
-  const rangeNumber2 = Math.floor(Math.random() * 9999999999) + 1;
-
+export default function Footer() {
   return (
     <>
       <div className="flex justify-between">
@@ -31,10 +28,10 @@ export default function Footer({ email, name, website, bankName, phone, bankAcco
             <span className="">Matični broj: </span>
             <span className="font-bold">63814962</span>
           </li>
-          {/* <li className="space-x-1">
+          <li className="space-x-1">
             <span className="normal-case">Šifra delatnosti: </span>
-            <span className="font-bold">{rangeNumber}</span>
-          </li> */}
+            <span className="font-bold">4520.7711</span>
+          </li>
           <li className="space-x-1">
             <span className="">PIB: </span>
             <span className="font-bold">108946375</span>

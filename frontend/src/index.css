@@ -2,11 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: "Roboto";
+  src: url('fonts/eot/Roboto-Regular.eot');
+  src: url('fonts/eot/Roboto-Regular.eot') format('embedded-opentype'),
+       url('fonts/woff2/Roboto-Regular.woff2') format('woff2'),
+       url('fonts/woff/Roboto-Regular.woff') format('woff'),
+       url('fonts/ttf/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url('fonts/eot/Roboto-Medium.eot');
+  src: url('fonts/eot/Roboto-Medium.eot') format('embedded-opentype'),
+       url('fonts/woff2/Roboto-Medium.woff2') format('woff2'),
+       url('fonts/woff/Roboto-Medium.woff') format('woff'),
+       url('fonts/ttf/Roboto-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: "Roboto";
+  src: url('fonts/eot/Roboto-Bold.eot');
+  src: url('fonts/eot/Roboto-Bold.eot') format('embedded-opentype'),
+       url('fonts/woff2/Roboto-Bold.woff2') format('woff2'),
+       url('fonts/woff/Roboto-Bold.woff') format('woff'),
+       url('fonts/ttf/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f1f1f1;

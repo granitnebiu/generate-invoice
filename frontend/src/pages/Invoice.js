@@ -58,6 +58,9 @@ export default function Invoice() {
 
   const handleExportWithMethod = (e) => {
     savePDF(componentRef.current, {
+      scale: 0.7,
+      paperSize: "A4",
+      margin: 0.5,
       fileName: `Faktura za ${clientName} ${dayjs(new Date()).format("DD-MM-YYYY")}`,
     });
     // export with component
@@ -180,7 +183,7 @@ export default function Invoice() {
                 className="paper-bg m-[30mm 45mm 30mm 45mm] mx-auto mt-4 h-[29.7cm] w-[21cm] border-2 bg-white p-5 shadow-xl"
                 ref={componentRef}
               >
-                <PDFExport scale={0.6} paperSize="A4" margin="1cm" ref={pdfExportComponent}>
+                <PDFExport scale={0.7} paperSize="A4" margin="0.5cm" ref={pdfExportComponent}>
                   <Header
                     name={name}
                     email={email}

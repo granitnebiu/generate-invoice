@@ -1,6 +1,11 @@
+import dayjs from "dayjs/esm/index.js";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
+import { BiLogOut, BiReset } from "react-icons/bi";
+
 import { useState, useRef, useEffect } from "react";
 import ClientDetails from "src/components/ClientDetails";
-import Date from "src/components/Date";
+// import Date from "src/components/Date";
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
 import MainDetails from "src/components/MainDetails";
@@ -8,9 +13,6 @@ import Notes from "src/components/Notes";
 import Table from "src/components/Table";
 import TableFrom from "src/components/TableFrom";
 import ReactToPrint from "react-to-print";
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
-import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
-import { BiLogOut, BiReset } from "react-icons/bi";
 
 import axios from "src/utils/axios";
 
@@ -55,7 +57,13 @@ export default function Invoice() {
   const pdfExportComponent = useRef(null);
 
   const handleExportWithMethod = (e) => {
-    savePDF(componentRef.current, { paper: "A4" });
+    savePDF(componentRef.current, {
+      fileName: `Faktura za ${clientName} ${dayjs(new Date()).format("DD-MM-YYYY")}`,
+    });
+    // export with component
+    // if (pdfExportComponent.current) {
+    //   pdfExportComponent.current.save();
+    // }
   };
 
   const [userData, setUserData] = useState();
@@ -167,12 +175,12 @@ export default function Invoice() {
                 <AiOutlineDownload />
               </button>
             </div>
-            <PDFExport ref={pdfExportComponent} pageSize="A4">
-              <div className="w-full overflow-x-auto ">
-                <div
-                  className="paper-bg m-[30mm 45mm 30mm 45mm] mx-auto mt-4 h-[29.7cm] w-[21cm] border-2 bg-white p-5 shadow-xl"
-                  ref={componentRef}
-                >
+            <div className="w-full overflow-x-auto ">
+              <div
+                className="paper-bg m-[30mm 45mm 30mm 45mm] mx-auto mt-4 h-[29.7cm] w-[21cm] border-2 bg-white p-5 shadow-xl"
+                ref={componentRef}
+              >
+                <PDFExport scale={0.6} paperSize="A4" margin="1cm" ref={pdfExportComponent}>
                   <Header
                     name={name}
                     email={email}
@@ -216,9 +224,10 @@ export default function Invoice() {
                   />
                   <Notes notes={notes} />
                   <Footer />
-                </div>
+                </PDFExport>
               </div>
-            </PDFExport>
+            </div>
+
             <button
               onClick={() => setShowInvoice(false)}
               className="mt-5 rounded border-2 border-blue-500 bg-blue-500 px-8  py-2 font-bold text-white shadow transition-all duration-500 hover:bg-transparent hover:text-blue-500"

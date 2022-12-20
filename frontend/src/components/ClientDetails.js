@@ -6,6 +6,8 @@ export default function ClientDetails({
   clientPib,
   clientMb,
   clientPlate,
+  clientBrojStete,
+  clientPolicaBroj,
 }) {
   return (
     <>
@@ -19,6 +21,16 @@ export default function ClientDetails({
         {clientPlate !== "" && (
           <p>
             Reg Oznaka: <span className="font-bold">{clientPlate}</span>
+          </p>
+        )}
+        {clientBrojStete !== "" && (
+          <p>
+            Broj štete: <span className="font-bold">{clientBrojStete}</span>
+          </p>
+        )}
+        {clientPolicaBroj !== "" && (
+          <p>
+            Polisa broj: <span className="font-bold">{clientPolicaBroj}</span>
           </p>
         )}
       </section>

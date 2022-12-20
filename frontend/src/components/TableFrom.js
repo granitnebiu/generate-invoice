@@ -16,12 +16,6 @@ export default function TableFrom({
   setJm,
   price,
   setPrice,
-  rabat,
-  setRabat,
-  priceSale,
-  setPriceSale,
-  tax,
-  setTax,
   amount,
   setAmount,
   setList,
@@ -194,7 +188,7 @@ export default function TableFrom({
               htmlFor="prise"
               className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
             >
-              Cena po komadu
+              Cena
             </label>
           </div>
 

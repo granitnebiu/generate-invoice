@@ -13,10 +13,8 @@ export default function Footer() {
         </div>
         <div className="flex w-96 justify-end">
           <div className="w-48 py-8 text-center">
-            <div className="mt-6 h-[1px] w-48 bg-gray-500"></div>
-            <p className="text-[14px]">robu primio</p>
-            <div className="mt-6 h-[1px] w-48 bg-gray-500"></div>
-            <p className="text-[14px]">Broj lične karte i mesto izdavanja</p>
+            <div className="mt-10 h-[1px] w-48 bg-gray-500"></div>
+            <p className="text-[14px]">Račun primio</p>
           </div>
         </div>
       </div>

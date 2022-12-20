@@ -2,7 +2,7 @@ import dayjs from "dayjs/esm/index.js";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 import { AiOutlineDownload, AiOutlinePrinter } from "react-icons/ai";
 import { BiLogOut, BiReset } from "react-icons/bi";
-
+import { FiRefreshCcw } from "react-icons/fi";
 import { useState, useRef, useEffect } from "react";
 import ClientDetails from "src/components/ClientDetails";
 // import Date from "src/components/Date";
@@ -18,6 +18,9 @@ import axios from "src/utils/axios";
 
 export default function Invoice() {
   const rangeNumber = Math.floor(Math.random() * 9999) + 1000;
+
+  const rangeNumber2 = Math.floor(Math.random() * 20) + 1;
+  const uniqueID = "XIMI" + Math.random().toString(36).slice(2, 7) + "-0" + rangeNumber2;
   const [showInvoice, setShowInvoice] = useState(false);
   const [active, setActive] = useState(false);
   const [name, setName] = useState(`"GEZIM MEMISHI PR AUTOLAKERSKA RADNJA LLAKER XIMI PREŠEVO"`);
@@ -34,13 +37,15 @@ export default function Invoice() {
   const [clientPib, setClientPib] = useState("");
   const [clientMb, setClientMb] = useState("");
   const [clientPlate, setClientPlate] = useState("");
+  const [clientBrojStete, setClientBrojStete] = useState("");
+  const [clientPolicaBroj, setClientPolicaBroj] = useState("");
 
-  const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [datumValute, setDatumValute] = useState("");
   const [notes, setNotes] = useState("");
   const [description, setDescription] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState(uniqueID);
   const [articleNumber, setArticleNumber] = useState("XM" + rangeNumber);
   const [jm, setJm] = useState("kom");
   const [rabat, setRabat] = useState(0);
@@ -119,6 +124,11 @@ export default function Invoice() {
   if (userData === undefined) {
     return;
   }
+
+  //generate another invoice number
+  const generateInvoiceNumber = () => {
+    setInvoiceNumber(uniqueID);
+  };
 
   return (
     <>
@@ -204,6 +214,7 @@ export default function Invoice() {
                       phone={phone}
                       invoiceDate={invoiceDate}
                       datumValute={datumValute}
+                      invoiceNumber={invoiceNumber}
                     />
                     <ClientDetails
                       clientName={clientName}
@@ -211,6 +222,8 @@ export default function Invoice() {
                       clientPib={clientPib}
                       clientAddress={clientAddress}
                       clientPlate={clientPlate}
+                      clientBrojStete={clientBrojStete}
+                      clientPolicaBroj={clientPolicaBroj}
                     />
                   </div>
                   {/* <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} /> */}
@@ -610,6 +623,72 @@ export default function Invoice() {
                   className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
                 >
                   Reg Oznaka
+                </label>
+              </div>
+
+              <div className="group relative z-0  w-full">
+                <input
+                  type="text"
+                  name="article_number"
+                  id="article_number"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0 pl-3  text-sm font-medium uppercase text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={invoiceNumber}
+                  onChange={(e) => setInvoiceNumber(e.target.value)}
+                />
+                <label
+                  htmlFor="article_number"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Broj računa
+                </label>
+              </div>
+              <button
+                type="button"
+                className="-ml-4 flex h-10 w-40 items-center justify-center gap-x-2 rounded-xl bg-gray-400 py-3 px-2 text-[14px] text-white"
+                onClick={() => generateInvoiceNumber()}
+              >
+                <FiRefreshCcw /> Novi broj fakture
+              </button>
+            </div>
+            {/* broj stete i polisa broj  */}
+            <div className="mb-4 grid md:grid-cols-3 md:gap-6">
+              <div className="group relative z-0 mb-6 w-full">
+                <input
+                  type="text"
+                  name="clientPlate"
+                  id="clientPlate"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0  pl-3 text-sm font-medium text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={clientBrojStete}
+                  onChange={(e) => setClientBrojStete(e.target.value)}
+                />
+                <label
+                  htmlFor="clientPlate"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Broj štete
+                </label>
+              </div>
+
+              <div className="group relative z-0  w-full">
+                <input
+                  type="text"
+                  name="article_number"
+                  id="article_number"
+                  className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-gray-100 py-2.5 px-0 pl-3  text-sm font-medium uppercase text-gray-900 focus:border-red-600 focus:outline-none focus:ring-0  "
+                  placeholder=" "
+                  autoComplete="off"
+                  value={clientPolicaBroj}
+                  onChange={(e) => setClientPolicaBroj(e.target.value)}
+                />
+                <label
+                  htmlFor="article_number"
+                  className="absolute top-1 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-red-600  "
+                >
+                  Polisa broj
                 </label>
               </div>
             </div>

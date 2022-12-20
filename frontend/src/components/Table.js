@@ -11,7 +11,7 @@ export default function Table({ tax, list, total, setTotal }) {
             <td className="border-r-2 border-b-gray-200">Naziv artikla</td>
             <td className="border-r-2 border-b-gray-200">Količina</td>
             <td className="border-r-2 border-b-gray-200">JM</td>
-            <td className="border-r-2 border-b-gray-200">Cena po komadu</td>
+            <td className="border-r-2 border-b-gray-200">Cena</td>
             <td className="border-r-2 border-b-gray-200">Ukupno</td>
           </tr>
         </thead>

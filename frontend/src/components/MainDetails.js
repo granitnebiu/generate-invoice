@@ -18,19 +18,25 @@ export default function MainDetails({
         </p>
         <p className="">
           Datum izdavanja računa :
-          <span className="uppercase"> {dayjs(invoiceDate).format("DD.MM.YYYY")}</span>
+          <span className="ml-2 uppercase">
+            {invoiceDate === "" ? " / " : dayjs(invoiceDate).format("DD.MM.YYYY")}
+          </span>
         </p>
         <p className="">
           Mesto izadanja računa:
-          <span className=""> {partAddress[1] + " " + partAddress[2]}</span>
+          <span className=""> {partAddress[1] + " " + partAddress[2] + " " + partAddress[3]} </span>
         </p>
         <p className="">
-          Datum izdavanja računa :
-          <span className="uppercase"> {dayjs(dueDate).format("DD.MM.YYYY")}</span>
+          Datum prometa dobara:
+          <span className="ml-2 uppercase">
+            {dueDate === "" ? " / " : dayjs(dueDate).format("DD.MM.YYYY")}
+          </span>
         </p>
         <p className="">
           Datum valute :
-          <span className="uppercase"> {dayjs(datumValute).format("DD.MM.YYYY")}</span>
+          <span className="ml-2 uppercase">
+            {datumValute === "" ? " / " : dayjs(datumValute).format("DD.MM.YYYY")}
+          </span>
         </p>
       </section>
     </>

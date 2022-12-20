@@ -213,6 +213,7 @@ export default function Invoice() {
                       postalCode={postalCode}
                       phone={phone}
                       invoiceDate={invoiceDate}
+                      dueDate={dueDate}
                       datumValute={datumValute}
                       invoiceNumber={invoiceNumber}
                     />
@@ -226,7 +227,6 @@ export default function Invoice() {
                       clientPolicaBroj={clientPolicaBroj}
                     />
                   </div>
-                  {/* <Date invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate} /> */}
                   <Table
                     articleNumber={articleNumber}
                     description={description}
@@ -646,7 +646,7 @@ export default function Invoice() {
               </div>
               <button
                 type="button"
-                className="-ml-4 flex h-10 w-40 items-center justify-center gap-x-2 rounded-xl bg-gray-400 py-3 px-2 text-[14px] text-white"
+                className="-ml-4 flex h-10 w-40 items-center justify-center gap-x-2 rounded-xl bg-gray-400 py-3 px-2 text-[14px] text-white transition duration-300 hover:bg-gray-500"
                 onClick={() => generateInvoiceNumber()}
               >
                 <FiRefreshCcw /> Novi broj fakture
